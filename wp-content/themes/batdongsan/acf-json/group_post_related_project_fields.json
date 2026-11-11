@@ -1,0 +1,75 @@
+{
+  "key": "group_post_related_project_fields",
+  "title": "Thuộc dự án",
+  "fields": [
+    {
+      "key": "field_du_an_lien_quan",
+      "label": "Thuộc dự án",
+      "name": "du_an_lien_quan",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "Chọn dự án hoặc phân khu lớn (Level 1 hoặc Level 2) mà bất động sản này thuộc về.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "du-an"
+      ],
+      "allow_null": 1,
+      "multiple": 0,
+      "return_format": "object",
+      "ui": 1
+    },
+    {
+      "key": "field_featured",
+      "label": "Tin nổi bật",
+      "name": "featured",
+      "aria-label": "",
+      "type": "true_false",
+      "instructions": "Đánh dấu nếu đây là tin nổi bật",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "message": "",
+      "default_value": 0,
+      "ui": 1,
+      "ui_on_text": "Có",
+      "ui_off_text": "Không"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "bat-dong-san"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Liên kết bài viết với dự án bất động sản",
+  "show_in_rest": 0,
+  "display_title": "",
+  "modified": 1772190912
+}

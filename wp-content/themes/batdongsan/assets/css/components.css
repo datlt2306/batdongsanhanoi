@@ -1,0 +1,920 @@
+/**
+ * Shared Component Styles
+ * File này chứa các style dùng chung để tránh trùng lặp
+ * Import vào style.css hoặc sử dụng trực tiếp
+ */
+
+/* ============================================
+   Swiper Navigation - Common Styles
+   Dùng chung cho hero-swiper, hero-projects-swiper, partners-swiper
+   ============================================ */
+
+.swiper-nav-circle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #0f172a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.swiper-nav-circle:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+}
+
+.swiper-nav-circle--prev {
+    left: 20px;
+}
+
+.swiper-nav-circle--next {
+    right: 20px;
+}
+
+.swiper-nav-circle.swiper-button-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .swiper-nav-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .swiper-nav-circle--prev {
+        left: 10px;
+    }
+
+    .swiper-nav-circle--next {
+        right: 10px;
+    }
+}
+
+/* ============================================
+   Swiper Pagination - Common Styles
+   ============================================ */
+
+.swiper-pagination-common {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: auto;
+}
+
+.swiper-pagination-common .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    margin: 0 6px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-common .swiper-pagination-bullet-active {
+    width: 30px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .swiper-pagination-common {
+        bottom: 20px;
+    }
+}
+
+/* ============================================
+   Apple Cupertino Hero Pagination
+   ============================================ */
+.hero-swiper__pagination,
+.hero-projects-swiper__pagination {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: 90% !important;
+    padding: 5px 12px !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    z-index: 25 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.hero-swiper__pagination .swiper-pagination-bullet,
+.hero-projects-swiper__pagination .swiper-pagination-bullet,
+.hero-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet,
+.hero-projects-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    border-radius: 9999px !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-block !important;
+    border: none !important;
+}
+
+.hero-swiper__pagination .swiper-pagination-bullet-active,
+.hero-projects-swiper__pagination .swiper-pagination-bullet-active,
+.hero-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active,
+.hero-projects-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active {
+    width: 22px !important;
+    height: 6px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+    border-radius: 9999px !important;
+    transform: scale(1) !important;
+    opacity: 1 !important;
+}
+
+/* ============================================
+   Form Input - Common Styles
+   Dùng chung cho search-project, projects-filter-bar
+   ============================================ */
+
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary, #C93347);
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(168, 139, 90, 0.20);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-muted, #6b7280);
+}
+
+/* ============================================
+   Form Select - Common Styles
+   ============================================ */
+
+.form-select {
+    width: 100%;
+    padding: 12px 36px 12px 14px;
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fff;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-primary, #C93347);
+    box-shadow: 0 0 0 2px rgba(168, 139, 90, 0.20);
+}
+
+.form-select-wrapper {
+    position: relative;
+}
+
+.form-select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--color-text-muted, #6b7280);
+}
+
+/* ============================================
+   Button - Common Styles
+   ============================================ */
+
+.btn-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--color-primary, #C93347);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover, #B22B3D);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(168, 139, 90, 0.25);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-muted, #6b7280);
+    border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.btn-secondary:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: var(--color-text-secondary, #374151);
+}
+
+/* ============================================
+   Card - Common Styles
+   ============================================ */
+
+.card-base {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease;
+    position: relative;
+    border: 1px solid #f1f5f9;
+}
+
+.card-base:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+}
+
+.card-thumb {
+    display: block;
+    height: 240px;
+    background: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .card-thumb {
+        height: 150px;
+    }
+}
+
+.card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-base:hover .card-thumb img {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        gap: 0;
+    }
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 12px;
+    line-height: 1.4;
+}
+
+.card-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.card-footer {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-divider {
+    margin: 12px 0;
+    height: 1px;
+    background: #e5e7eb;
+    width: 100%;
+}
+
+/* ============================================
+   Badge - Common Styles
+   ============================================ */
+
+.badge-base {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 10px 16px;
+    border-radius: 32px;
+}
+
+.badge-hot {
+    background: var(--color-primary, #C93347);
+    box-shadow: 0 10px 26px rgba(168, 139, 90, 0.25);
+}
+
+.badge-highlight {
+    background: #0ea5e9;
+    box-shadow: 0 10px 26px rgba(14, 165, 233, 0.22);
+}
+
+/* ============================================
+   Hero Section - Common Styles
+   ============================================ */
+
+.hero-base {
+    position: relative;
+    height: 40vh;
+    min-height: 540px;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .hero-base {
+        height: 20vh;
+        min-height: 420px;
+    }
+}
+
+.hero-swiper-base {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-swiper-base .swiper-wrapper {
+    height: 100%;
+}
+
+.hero-swiper-base .swiper-slide {
+    height: 100%;
+}
+
+.hero-slide {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    gap: 16px;
+    z-index: 2;
+}
+
+.hero-eyebrow {
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-primary, #C93347);
+    font-size: 12px;
+    margin: 0;
+}
+
+.hero-title {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* ============================================
+   Filter Box - Common Styles (Sidebar)
+   ============================================ */
+
+.filter-box-base {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+}
+
+.filter-box-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.filter-box-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-box-list a {
+    display: block;
+    padding: 10px 14px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background-color: #f9fafb;
+}
+
+.filter-box-list a:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.filter-box-list a.active {
+    background-color: var(--color-primary, #C93347);
+    color: #fff;
+    font-weight: 500;
+}
+
+/* ============================================
+   Price Display
+   ============================================ */
+
+.price {
+    font-weight: 600;
+    color: var(--color-primary, #C93347);
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .price {
+        font-size: 14px;
+    }
+}
+
+/* ============================================
+   Icon Pin (Location)
+   ============================================ */
+
+.icon-pin {
+    display: inline-flex;
+    color: var(--color-primary, #C93347);
+}
+
+@media (max-width: 768px) {
+    .card-location .icon-pin {
+        display: none;
+    }
+}
+
+/* ============================================
+   Section Styles
+   ============================================ */
+
+.section-base {
+    padding: 64px 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.section-header--center {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-title {
+    font-weight: 600;
+    margin: 0;
+    font-size: 24px;
+}
+
+.section-title--center {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+/* ============================================
+   Search Form Panel
+   ============================================ */
+
+.search-panel-base {
+    position: relative;
+    margin: auto;
+    margin-top: -70px;
+    z-index: 10;
+    max-width: 1200px;
+}
+
+.search-form-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 32px 28px;
+    max-width: 100%;
+}
+
+.search-form-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.search-form-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.search-form-subtitle {
+    font-size: 15px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ============================================
+   ZERO CLS (Cumulative Layout Shift) STYLES
+   Pre-reserve dimensions for Swiper and Image Frames
+   ============================================ */
+.swiper, .swiper-container {
+    width: 100%;
+}
+
+.swiper-pagination,
+.hero-swiper__pagination,
+.hero-projects-swiper__pagination {
+    min-height: 28px;
+}
+
+.hero-banner-slider,
+.hero-swiper {
+    min-height: 380px;
+}
+
+@media (min-width: 640px) {
+    .hero-banner-slider,
+    .hero-swiper {
+        min-height: 480px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-banner-slider,
+    .hero-swiper {
+        min-height: 560px;
+    }
+}
+
+/* Base image safety with full-bleed utility preservation */
+img {
+    max-width: 100%;
+}
+
+img:not(.h-full):not([class*="h-"]):not([style*="height"]) {
+    height: auto;
+}
+
+/* Explicit full-bleed and object-fit enforcement for card & grid media */
+img.h-full,
+.h-full > img {
+    height: 100% !important;
+}
+
+img.w-full,
+.w-full > img {
+    width: 100% !important;
+}
+
+img.object-cover,
+.object-cover > img {
+    object-fit: cover !important;
+}
+
+.card-project__image-wrapper,
+.card-bds__image-wrapper {
+    aspect-ratio: 16 / 10;
+    background-color: #f3f4f6;
+    overflow: hidden;
+}
+
+/* ============================================
+   BDS Interactive Map & Amenities Explorer
+   ============================================ */
+.bds-custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+.bds-custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+.bds-custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.bds-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.bds-leaflet-custom-popup .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    padding: 8px 12px;
+}
+.bds-leaflet-custom-popup .leaflet-popup-tip {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bdsBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1.25);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.35);
+    }
+}
+.bds-marker-bounce {
+    animation: bdsBounce 0.6s ease infinite;
+    z-index: 999 !important;
+}
+
+/* ============================================
+   LayerSlider Cinematic Motion Engine
+   ============================================ */
+
+/* 1. Ken Burns Background Zoom & Pan */
+@keyframes heroKenBurns {
+    0% {
+        transform: scale(1.0) translate3d(0, 0, 0);
+    }
+    50% {
+        transform: scale(1.055) translate3d(-0.8%, -0.5%, 0);
+    }
+    100% {
+        transform: scale(1.095) translate3d(-1.2%, -1%, 0);
+    }
+}
+
+.hero-layer-img {
+    transform: scale(1.0) translate3d(0, 0, 0);
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.hero-swiper.swiper-initialized .swiper-slide-active .hero-layer-img,
+.hero-projects-swiper.swiper-initialized .swiper-slide-active .hero-layer-img {
+    animation: heroKenBurns 8.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 2. Layer Elements Transition & Stagger */
+.hero-swiper.swiper-initialized .hero-layer--eyebrow,
+.hero-projects-swiper.swiper-initialized .hero-layer--eyebrow {
+    opacity: 0;
+    transform: translateY(-24px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.hero-swiper.swiper-initialized .hero-layer--title,
+.hero-projects-swiper.swiper-initialized .hero-layer--title {
+    opacity: 0;
+    transform: translateY(38px) scale(0.97);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.hero-swiper.swiper-initialized .hero-layer--subtitle,
+.hero-projects-swiper.swiper-initialized .hero-layer--subtitle {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.hero-swiper.swiper-initialized .hero-layer--cta,
+.hero-projects-swiper.swiper-initialized .hero-layer--cta {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+/* Active Stagger Delays (Layer Entrance) */
+.hero-swiper.swiper-initialized .swiper-slide-active .hero-layer--eyebrow,
+.hero-projects-swiper.swiper-initialized .swiper-slide-active .hero-layer--eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 200ms;
+}
+
+.hero-swiper.swiper-initialized .swiper-slide-active .hero-layer--title,
+.hero-projects-swiper.swiper-initialized .swiper-slide-active .hero-layer--title {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 350ms;
+}
+
+.hero-swiper.swiper-initialized .swiper-slide-active .hero-layer--subtitle,
+.hero-projects-swiper.swiper-initialized .swiper-slide-active .hero-layer--subtitle {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 500ms;
+}
+
+.hero-swiper.swiper-initialized .swiper-slide-active .hero-layer--cta,
+.hero-projects-swiper.swiper-initialized .swiper-slide-active .hero-layer--cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 650ms;
+}
+
+/* Inactive slide layer exit (fade out gracefully) */
+.hero-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--eyebrow,
+.hero-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--title,
+.hero-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--subtitle,
+.hero-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--cta,
+.hero-projects-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--eyebrow,
+.hero-projects-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--title,
+.hero-projects-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--subtitle,
+.hero-projects-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) .hero-layer--cta {
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 0.35s;
+    transition-delay: 0ms;
+}
+
+/* 3. Luxury CTA Shimmer Light */
+.hero-btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+.hero-btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -120%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.38),
+        transparent
+    );
+    transform: rotate(25deg);
+    pointer-events: none;
+}
+.swiper-slide-active .hero-btn-shimmer::after {
+    animation: heroBtnShimmer 2.5s ease-in-out 1.2s infinite;
+}
+@keyframes heroBtnShimmer {
+    0% {
+        left: -120%;
+    }
+    40%, 100% {
+        left: 200%;
+    }
+}
+
+/* 4. LayerSlider Timeline Progress Bar */
+@keyframes heroProgressTimer {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.hero-slider-progress-bar.is-active {
+    animation: heroProgressTimer 6s linear forwards;
+}
+
+.hero-layerslider-container:hover .hero-slider-progress-bar.is-active {
+    animation-play-state: paused;
+}
+
+/* 5. Ambient Glow Accent */
+.hero-ambient-glow {
+    filter: blur(80px);
+    opacity: 0.65;
+    mix-blend-mode: screen;
+}
+
+/* 6. Navigation Button Enhancements */
+.hero-swiper__nav,
+.hero-projects-swiper__nav {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.hero-swiper__nav:hover,
+.hero-projects-swiper__nav:hover {
+    box-shadow: 0 0 20px rgba(201, 51, 71, 0.5) !important;
+}
+.hero-swiper__nav--prev:hover svg {
+    transform: translateX(-2px);
+}
+.hero-swiper__nav--next:hover svg {
+    transform: translateX(2px);
+}
+.hero-swiper__nav svg {
+    transition: transform 0.25s ease;
+}
+
+/* 7. Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .hero-layer-img,
+    .hero-swiper .hero-layer,
+    .hero-projects-swiper .hero-layer,
+    .hero-btn-shimmer::after,
+    .hero-slider-progress-bar {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+
+
+

@@ -1,0 +1,667 @@
+@import "tailwindcss";
+@source "../**/*.php";
+@source "../js/**/*.js";
+
+/* ============================================
+   Theme Tokens - Luxury Apple Design System
+   Palette: Crimson Red (#C93347) | Charcoal (#292929) | Warm Ivory (#F7F4EF) | Champagne Gold (#C6A46A)
+   ============================================ */
+@theme {
+    /* Colors - Charcoal & Dark Surfaces (Màu phụ) */
+    --color-navy: #292929;
+    --color-navy-dark: #202020;
+    --color-navy-light: #333333;
+    --color-navy-tint: rgba(41, 41, 41, 0.04);
+
+    /* Colors - Champagne Gold (Màu nhấn: Đường viền tinh tế, icon đặc biệt, nhãn nổi bật) */
+    --color-gold: #C6A46A;
+    --color-gold-hover: #B59359;
+    --color-gold-light: #F9F6F0;
+    --color-gold-tint: rgba(198, 164, 106, 0.12);
+
+    /* Colors - Crimson Red (Màu chủ đạo: CTA, nút đăng ký tư vấn, điểm nhấn) */
+    --color-primary: #C93347;
+    --color-primary-hover: #B22B3D;
+    --color-primary-dark: #991F2F;
+    --color-primary-light: #FDF2F4;
+    --color-primary-tint: rgba(201, 51, 71, 0.08);
+    --color-brand: #C93347;
+
+    /* Consultation & Action CTA Colors */
+    --color-brand-red: #C93347;
+    --color-brand-red-hover: #B22B3D;
+    --color-brand-red-light: #FDF2F4;
+    --color-brand-red-tint: rgba(201, 51, 71, 0.08);
+
+    /* Colors - Warm Ivory (Màu nền: Nền trang, khu vực giới thiệu dự án, tạo độ thoáng) */
+    --color-canvas: #F7F4EF;
+    --color-surface: #FFFFFF;
+    --color-surface-dark: #292929;
+    --color-stone: #EFECE6;
+    --color-limestone: #EFECE6;
+    --color-background: #F7F4EF;
+    --color-white: #FFFFFF;
+
+    /* Colors - Charcoal Typography (Màu phụ: Tiêu đề, menu, footer, cao cấp) */
+    --color-charcoal: #292929;
+    --color-charcoal-muted: #737373;
+    --color-text: #292929;
+    --color-text-secondary: #737373;
+    --color-text-muted: #737373;
+    --color-text-light: #9E9E9E;
+
+    /* Colors - Delicate Borders on Warm Ivory */
+    --color-border: #E8E4DC;
+    --color-border-light: #F2EFE9;
+    --color-greige: #E8E4DC;
+
+    /* Shadows - Ultra-soft Diffuse */
+    --shadow-card: 0 2px 14px -2px rgba(41, 41, 41, 0.04), 0 1px 3px rgba(41, 41, 41, 0.02);
+    --shadow-card-hover: 0 12px 32px -4px rgba(41, 41, 41, 0.08), 0 4px 12px -2px rgba(41, 41, 41, 0.03);
+    --shadow-button: 0 4px 14px rgba(201, 51, 71, 0.25);
+    --shadow-button-navy: 0 4px 14px rgba(41, 41, 41, 0.18);
+    --shadow-button-gold: 0 4px 14px rgba(198, 164, 106, 0.28);
+    --shadow-dropdown: 0 16px 36px -4px rgba(41, 41, 41, 0.12), 0 4px 12px rgba(41, 41, 41, 0.04);
+    --shadow-subtle: 0 1px 2px rgba(41, 41, 41, 0.04);
+    --shadow-diffuse: 0 12px 36px -8px rgba(41, 41, 41, 0.05);
+
+    /* Border Radius - Apple Squircles */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    --radius-full: 9999px;
+
+    /* Typography - Apple SF Pro & Clean Sans Everywhere */
+    --font-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Plus Jakarta Sans", sans-serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Plus Jakarta Sans", sans-serif;
+}
+
+/* ============================================
+   BASE STYLES - Apple Cupertino System Defaults
+   ============================================ */
+@layer base {
+    html,
+    body {
+        overflow-x: clip;
+        max-width: 100vw;
+        scroll-behavior: smooth;
+    }
+
+    :root {
+        --color-primary: #C93347;
+        --color-primary-hover: #B22B3D;
+        --color-primary-dark: #991F2F;
+        --color-primary-light: #FDF2F4;
+        --color-primary-tint: rgba(201, 51, 71, 0.08);
+        --color-brand: #C93347;
+        --color-brand-red: #C93347;
+        --color-brand-red-hover: #B22B3D;
+        --color-gold: #C6A46A;
+        --color-gold-hover: #B59359;
+        --color-gold-light: #F9F6F0;
+        --color-gold-tint: rgba(198, 164, 106, 0.12);
+        --color-navy: #292929;
+        --color-navy-dark: #202020;
+        --color-navy-light: #333333;
+        --color-canvas: #F7F4EF;
+        --color-surface: #FFFFFF;
+        --color-charcoal: #292929;
+        --color-charcoal-muted: #737373;
+        --color-border: #E8E4DC;
+        --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Plus Jakarta Sans", sans-serif;
+        --font-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Plus Jakarta Sans", sans-serif;
+    }
+}
+
+/* ============================================
+   BASE COMPONENTS - Giữ lại vì dùng ở nhiều nơi
+   ============================================ */
+@layer components {
+    /* Container - dùng ở mọi page */
+    .container {
+        @apply w-full max-w-[1440px] mx-auto px-5 box-border;
+    }
+
+    /* Header base styles - Apple Cupertino Frosted Glass */
+    .header {
+        @apply sticky top-0 z-[1001];
+        background: rgba(255, 255, 255, 0.80);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .header__inner {
+        @apply flex items-center justify-between py-2.5 gap-5;
+    }
+
+    .brand {
+        @apply inline-flex items-center gap-2.5 font-bold text-[20px] text-charcoal tracking-tight;
+    }
+
+    .brand__logo,
+    .custom-logo {
+        height: 44px !important;
+        max-height: 44px !important;
+        width: auto !important;
+        object-fit: contain;
+        display: block;
+    }
+
+    .custom-logo-link {
+        @apply inline-flex items-center;
+    }
+
+    .nav {
+        @apply flex items-center gap-0 font-medium text-[14px] flex-1 justify-center;
+    }
+
+    .nav__list {
+        @apply flex gap-4 xl:gap-6 items-center list-none m-0 p-0 whitespace-nowrap;
+    }
+
+    .nav__list > li {
+        @apply shrink-0 whitespace-nowrap;
+    }
+
+    .nav__list a {
+        @apply py-2 text-charcoal/80 hover:text-primary transition-colors inline-block whitespace-nowrap;
+    }
+
+    .nav__list .current-menu-item > a,
+    .nav__list a:hover {
+        @apply text-primary font-semibold;
+    }
+
+    .header__cta {
+        @apply inline-flex items-center justify-center px-4 py-2 bg-primary text-white rounded-full text-sm font-medium transition-all duration-200 shadow-none;
+    }
+
+    .header__cta:hover {
+        @apply bg-primary-hover scale-[1.02];
+    }
+}
+
+/* ============================================
+   COMPLEX COMPONENTS - Navigation Dropdown
+   (Nested selectors + pseudo-elements = giữ custom CSS)
+   ============================================ */
+
+/* Dropdown Menu */
+.nav__list .menu-item-has-children {
+    position: relative;
+}
+
+.nav__list .menu-item-has-children > a {
+    position: relative;
+    padding-right: 20px;
+}
+
+.nav__list > .menu-item-has-children > a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid currentColor;
+    transition: transform 0.3s ease;
+    opacity: 0.6;
+}
+
+.nav__list .menu-item-has-children:hover > a::after {
+    transform: translateY(-50%) rotate(180deg);
+    opacity: 1;
+}
+
+.nav__list .current-menu-parent > a {
+    color: var(--color-primary);
+}
+
+/* Sub-menu Level 1 - Apple Cupertino Floating Glass */
+.nav__list .sub-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s;
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+}
+
+.nav__list .sub-menu::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: transparent;
+}
+
+.nav__list .menu-item-has-children:hover > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav__list .sub-menu .menu-item {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.nav__list .sub-menu .menu-item > a {
+    display: block;
+    padding: 8px 14px;
+    color: var(--color-charcoal);
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav__list .sub-menu .menu-item:hover > a {
+    color: var(--color-primary);
+    background: var(--color-primary-tint);
+}
+
+.nav__list .sub-menu .current-menu-item > a {
+    color: var(--color-primary);
+    background: var(--color-primary-tint);
+    font-weight: 600;
+}
+
+/* Sub-menu Level 2 */
+.nav__list .sub-menu .menu-item-has-children > a::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 5px solid currentColor;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.nav__list .sub-menu .menu-item-has-children:hover > a::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(3px);
+}
+
+.nav__list .sub-menu .sub-menu {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 4px);
+    transform: translateX(-5px) translateY(0);
+    min-width: 200px;
+    background: #fff;
+    padding: 8px 0;
+    border-radius: var(--radius-lg, 8px);
+    border: 1px solid var(--color-border, #E5E0D8);
+    box-shadow: var(--shadow-dropdown, 0 16px 40px -6px rgba(37, 39, 36, 0.08));
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s;
+    z-index: 101;
+}
+
+.nav__list .sub-menu .sub-menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 10px;
+    height: 100%;
+    background: transparent;
+}
+
+.nav__list .sub-menu .menu-item-has-children:hover > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) translateY(0);
+}
+
+.nav__list .sub-menu .sub-menu .menu-item > a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(-50%) scaleY(0);
+    height: 100%;
+    width: 3px;
+    background: var(--color-primary);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+.nav__list .sub-menu .sub-menu .menu-item:hover > a {
+    color: var(--color-primary);
+    background: rgba(168, 139, 90, 0.06);
+    padding-left: 24px;
+}
+
+.nav__list .sub-menu .sub-menu .menu-item:hover > a::before {
+    transform: scaleY(1);
+}
+
+.nav__list .sub-menu .sub-menu .current-menu-item > a {
+    color: var(--color-primary);
+    background: rgba(168, 139, 90, 0.06);
+    font-weight: 600;
+}
+
+.nav__list .sub-menu .sub-menu .current-menu-item > a::before {
+    transform: scaleY(1);
+}
+
+/* Responsive Navigation - Mobile */
+@media (max-width: 768px) {
+    .nav__list .sub-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border-radius: 0;
+        background: #f9fafb;
+        margin-top: 0;
+        padding: 8px 0;
+        margin-left: 16px;
+    }
+
+    .nav__list .menu-item-has-children:hover > .sub-menu {
+        transform: none;
+    }
+
+    .nav__list .menu-item-has-children > a::after {
+        display: none;
+    }
+
+    .nav__list .sub-menu .sub-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border-radius: 0;
+        background: #f1f5f9;
+        margin-top: 0;
+        margin-left: 16px;
+        padding: 8px 0;
+        min-width: auto;
+    }
+
+    .nav__list .sub-menu .menu-item-has-children:hover > .sub-menu {
+        transform: none;
+    }
+
+    .nav__list .sub-menu .menu-item-has-children > a::after {
+        display: none;
+    }
+}
+
+/* ============================================
+   Custom Tailwind Utilities
+   ============================================ */
+@layer utilities {
+    .container-bds {
+        @apply w-full max-w-[1440px] mx-auto px-5 box-border;
+    }
+
+    /* Line clamp utility */
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+/* ============================================
+   PROJECT DETAIL - Share Menu Dropdown
+   ============================================ */
+.project-detail__share {
+    position: relative;
+}
+
+.project-detail__share-button {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:border-gray-300 active:scale-95 cursor-pointer;
+}
+
+.project-detail__share-menu {
+    @apply absolute top-[calc(100%+8px)] right-0 z-50 min-w-[200px] bg-white rounded-xl shadow-[0_12px_40px_rgba(15,23,42,0.12)] border border-gray-100 p-2 opacity-0 invisible -translate-y-2 transition-all duration-200 pointer-events-none;
+}
+
+.project-detail__share-menu--open {
+    @apply opacity-100 visible translate-y-0 pointer-events-auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+}
+
+/* Filter header modal - slide up animation */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.animate-slide-up {
+    animation: slideUp 0.25s ease-out forwards;
+}
+
+/* Suppress gray tap highlight on iOS */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide scrollbars completely across all browsers */
+.no-scrollbar,
+.scrollbar-none {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Apple Swiper Island Pagination */
+.hero-swiper__pagination,
+.hero-projects-swiper__pagination {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: 90% !important;
+    padding: 5px 12px !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    z-index: 25 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.hero-swiper__pagination .swiper-pagination-bullet,
+.hero-projects-swiper__pagination .swiper-pagination-bullet,
+.hero-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet,
+.hero-projects-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    border-radius: 9999px !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-block !important;
+    border: none !important;
+}
+
+.hero-swiper__pagination .swiper-pagination-bullet-active,
+.hero-projects-swiper__pagination .swiper-pagination-bullet-active,
+.hero-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active,
+.hero-projects-swiper__pagination.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active {
+    width: 22px !important;
+    height: 6px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+    border-radius: 9999px !important;
+    transform: scale(1) !important;
+    opacity: 1 !important;
+}
+
+/* ============================================
+   Apple Cupertino Custom Scrollbar & Menu Transitions
+   ============================================ */
+
+/* Apple Cupertino Smooth Popover / Menu Entrance Animation */
+@keyframes appleMenuIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.apple-dropdown-panel {
+    transform-origin: top left;
+    animation: appleMenuIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .apple-dropdown-panel {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Apple Cupertino Slim Floating Scrollbar */
+.apple-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+}
+
+.apple-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.apple-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+}
+
+.apple-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+}
+
+.apple-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Refined Cupertino scrollbar for all dropdown lists and scrollable panels */
+[data-filter-area-panel] ul::-webkit-scrollbar,
+[data-filter-type-panel] ul::-webkit-scrollbar,
+[data-filter-status-panel] ul::-webkit-scrollbar,
+[data-filter-price-panel] div::-webkit-scrollbar,
+[data-filter-area-range-panel] div::-webkit-scrollbar,
+[data-filter-advanced-panel] div::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+[data-filter-area-panel] ul::-webkit-scrollbar-track,
+[data-filter-type-panel] ul::-webkit-scrollbar-track,
+[data-filter-status-panel] ul::-webkit-scrollbar-track,
+[data-filter-price-panel] div::-webkit-scrollbar-track,
+[data-filter-area-range-panel] div::-webkit-scrollbar-track,
+[data-filter-advanced-panel] div::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+[data-filter-area-panel] ul::-webkit-scrollbar-thumb,
+[data-filter-type-panel] ul::-webkit-scrollbar-thumb,
+[data-filter-status-panel] ul::-webkit-scrollbar-thumb,
+[data-filter-price-panel] div::-webkit-scrollbar-thumb,
+[data-filter-area-range-panel] div::-webkit-scrollbar-thumb,
+[data-filter-advanced-panel] div::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 9999px;
+}
+
+[data-filter-area-panel] ul::-webkit-scrollbar-thumb:hover,
+[data-filter-type-panel] ul::-webkit-scrollbar-thumb:hover,
+[data-filter-status-panel] ul::-webkit-scrollbar-thumb:hover,
+[data-filter-price-panel] div::-webkit-scrollbar-thumb:hover,
+[data-filter-area-range-panel] div::-webkit-scrollbar-thumb:hover,
+[data-filter-advanced-panel] div::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+[data-filter-area-panel] ul,
+[data-filter-type-panel] ul,
+[data-filter-status-panel] ul {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+}

@@ -1,0 +1,69 @@
+{
+    "key": "group_doi_tac_chung_nhan_fields",
+    "title": "Thông tin đối tác",
+    "fields": [
+        {
+            "key": "field_logo",
+            "label": "Logo",
+            "name": "logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "📐 Kích thước khuyến nghị: 400 x 200px (tỉ lệ 2:1 ngang, tối thiểu 200 x 100px). Logo rõ nét, ưu tiên PNG nền trong suốt hoặc SVG. Dung lượng < 150KB.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_link",
+            "label": "Link",
+            "name": "link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Nhập URL website của đối tác (tùy chọn)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "doi-tac"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Thông tin đối tác",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1735894604
+}
+

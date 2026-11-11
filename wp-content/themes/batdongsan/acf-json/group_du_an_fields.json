@@ -1,0 +1,981 @@
+{
+    "key": "group_du_an_fields",
+    "title": "Thông tin dự án",
+    "fields": [
+        {
+            "key": "field_tab_sec01_tong_quan",
+            "label": "📋 Tổng quan",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_du_an_cha",
+            "label": "Dự án cha",
+            "name": "du_an_cha",
+            "type": "post_object",
+            "instructions": "Nếu đây là một Phân khu, hãy chọn dự án lớn chứa nó. Nếu đây là Dự án tổng, hãy để trống.",
+            "required": 0,
+            "post_type": [
+                "du-an"
+            ],
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_featured_du_an",
+            "label": "Dự án nổi bật",
+            "name": "featured",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Đánh dấu để hiển thị dự án này trong section \"Dự án nổi bật nhất\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "Đây là dự án nổi bật",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Có",
+            "ui_off_text": "Không"
+        },
+        {
+            "key": "field_trang_thai_du_an",
+            "label": "Trạng thái dự án",
+            "name": "trang_thai",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Chọn trạng thái hiện tại của dự án (phục vụ filter sau này).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dang_mo_ban": "Đang mở bán",
+                "sap_mo_ban": "Sắp mở bán",
+                "da_ban_het": "Đã bán hết",
+                "tam_dung": "Tạm dừng",
+                "dang_cap_nhat": "Đang cập nhật"
+            },
+            "default_value": "dang_mo_ban",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_loai_hinh_du_an_tax",
+            "label": "Loại hình dự án",
+            "name": "loai_hinh_du_an",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Chọn loại hình dự án",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "loai_hinh_du_an",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "multiple": 0,
+            "load_post_terms": 1
+        },
+        {
+            "key": "field_chu_dau_tu",
+            "label": "Chủ đầu tư",
+            "name": "chu_dau_tu",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nhập tên chủ đầu tư. Nếu là Phân khu và để trống, hệ thống sẽ tự lấy từ Dự án cha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_price",
+            "label": "Giá",
+            "name": "price",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nhập giá dự án (số tỷ VNĐ) hoặc text như \"Liên hệ\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quy_mo",
+            "label": "Quy mô",
+            "name": "quy_mo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: 5ha, 3 block + 2 tòa thương mại... Nếu là Phân khu và để trống, hệ thống sẽ lấy từ Dự án cha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_so_can",
+            "label": "Số căn",
+            "name": "so_can",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: 850 căn hộ, 120 lô liền kề...",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "850 căn hộ",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_so_toa",
+            "label": "Số tòa",
+            "name": "so_toa",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: 2 tòa tháp, 5 block...",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "2 tòa tháp",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_so_tang",
+            "label": "Số tầng",
+            "name": "so_tang",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: 35 tầng",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "35 tầng",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_dien_tich",
+            "label": "Diện tích",
+            "name": "dien_tich",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: 65 - 150 m² hoặc 102 – 212m²",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "65 - 150 m²",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ban_giao",
+            "label": "Bàn giao",
+            "name": "ban_giao",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: Q4/2025",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Q4/2025",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gallery_du_an",
+            "label": "Gallery dự án",
+            "name": "gallery_du_an",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "📐 Kích thước khuyến nghị: 1200 x 800px (tỉ lệ 3:2 chuẩn kiến trúc) hoặc 1600 x 900px (16:9). Tối thiểu 800 x 533px. Dung lượng tối ưu < 350KB/ảnh (WebP, JPG). Ảnh đầu tiên sẽ làm ảnh đại diện phụ nếu chưa chọn ảnh chính.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "insert": "append",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_tab_sec02_vi_tri_tien_ich",
+            "label": "📍 Vị trí & Tiện ích",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_address",
+            "label": "Địa chỉ",
+            "name": "address",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nhập địa chỉ dự án. Nếu là Phân khu và để trống, hệ thống sẽ tự lấy địa chỉ từ Dự án cha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_map_embed",
+            "label": "Nhúng Google Maps",
+            "name": "map_embed",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Copy iframe code từ Google Maps và paste vào đây. Để lấy iframe code: Vào Google Maps → Chia sẻ → Nhúng bản đồ → Copy iframe code.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 5,
+            "placeholder": "<iframe src=\"https://www.google.com/maps/embed?pb=...\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "new_lines": ""
+        },
+        {
+            "key": "field_thu_vien_anh",
+            "label": "Ảnh sơ đồ vị trí & Kết nối vùng",
+            "name": "thu_vien_anh",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Hình ảnh sơ đồ vị trí hoặc bản đồ liên kết giao thông / hạ tầng khu vực.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_tien_ich",
+            "label": "Tiện ích nổi bật",
+            "name": "tien_ich",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Danh sách mô tả tiện ích nội khu và ngoại khu của dự án.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_tab_sec03_mat_bang_thiet_ke",
+            "label": "📐 Mặt bằng & Thiết kế",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_danh_sach_mat_bang",
+            "label": "Danh Sách Mặt Bằng (Tầng / Phân Khu)",
+            "name": "danh_sach_mat_bang",
+            "type": "repeater",
+            "instructions": "Bao gồm bản vẽ quy hoạch tổng thể và các bản vẽ mặt bằng từng tầng.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "+ Thêm Mặt Bằng",
+            "sub_fields": [
+                {
+                    "key": "field_mb_ten",
+                    "label": "Tên Mặt Bằng",
+                    "name": "ten_mat_bang",
+                    "type": "text",
+                    "instructions": "VD: Tháp F2 - Tầng 3, Tháp F2 - Tầng 4–19...",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "40"
+                    }
+                },
+                {
+                    "key": "field_mb_anh",
+                    "label": "Ảnh Bản Vẽ",
+                    "name": "anh_mat_bang",
+                    "type": "image",
+                    "instructions": "Tải ảnh bản vẽ mặt bằng",
+                    "return_format": "array",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "35"
+                    }
+                },
+                {
+                    "key": "field_mb_ghi_chu",
+                    "label": "Ghi Chú Nhanh",
+                    "name": "ghi_chu",
+                    "type": "text",
+                    "instructions": "VD: 8 căn/sàn • 4 thang máy",
+                    "required": 0,
+                    "wrapper": {
+                        "width": "25"
+                    }
+                }
+            ]
+        },
+        {
+            "key": "field_mat_bang_gallery",
+            "label": "Mặt bằng dự án (gallery)",
+            "name": "mat_bang_gallery",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "📐 Kích thước khuyến nghị: 1600 x 1060px (tỉ lệ 3:2) hoặc 1600 x 1200px (4:3). Độ phân giải cao để xem rõ chi tiết bản vẽ mặt bằng khi phóng to. Dung lượng tối ưu < 400KB/ảnh.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "insert": "append",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_phoi_canh_3d_gallery",
+            "label": "Ảnh phối cảnh 3D kiến trúc & cảnh quan",
+            "name": "phoi_canh_3d_gallery",
+            "type": "gallery",
+            "instructions": "Hình ảnh thiết kế 3D kiến trúc, cảnh quan và không gian nội thất.",
+            "required": 0,
+            "return_format": "array",
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_nha_mau_gallery",
+            "label": "Hình ảnh căn hộ mẫu thực tế (Showroom)",
+            "name": "nha_mau_gallery",
+            "type": "gallery",
+            "instructions": "Hình ảnh thực tế căn hộ mẫu (Showroom) trưng bày.",
+            "required": 0,
+            "return_format": "array",
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_tab_sec04_phap_ly_tien_do",
+            "label": "⚖️ Pháp lý & Tiến độ",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_phap_ly_hinh_thuc_so_huu",
+            "label": "Hình thức sở hữu",
+            "name": "phap_ly_hinh_thuc_so_huu",
+            "type": "text",
+            "instructions": "VD: Sổ hồng lâu dài đối với người Việt Nam, 50 năm đối với người nước ngoài",
+            "required": 0,
+            "placeholder": "Sổ hồng lâu dài",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_phap_ly_quy_hoach",
+            "label": "Phê duyệt quy hoạch 1/500",
+            "name": "phap_ly_quy_hoach",
+            "type": "text",
+            "instructions": "Số quyết định phê duyệt quy hoạch chi tiết 1/500",
+            "required": 0,
+            "placeholder": "Quyết định số 1234/QĐ-UBND phê duyệt 1/500",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_phap_ly_gpxd",
+            "label": "Giấy phép xây dựng",
+            "name": "phap_ly_gpxd",
+            "type": "text",
+            "instructions": "Số giấy phép xây dựng cấp bởi Sở Xây dựng",
+            "required": 0,
+            "placeholder": "GPXD số 56/GPXD cấp ngày ...",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_phap_ly_dieu_kien_ban_giao",
+            "label": "Điều kiện mở bán & Bàn giao",
+            "name": "phap_ly_dieu_kien_ban_giao",
+            "type": "text",
+            "instructions": "Tình trạng nghiệm thu móng và văn bản đủ điều kiện bán hàng",
+            "required": 0,
+            "placeholder": "Đã có văn bản đủ điều kiện bán nhà ở hình thành trong tương lai",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_phap_ly_ngan_hang_bao_lanh",
+            "label": "Ngân hàng bảo lãnh dự án",
+            "name": "phap_ly_ngan_hang_bao_lanh",
+            "type": "text",
+            "instructions": "Danh sách ngân hàng bảo lãnh tài chính",
+            "required": 0,
+            "placeholder": "Vietcombank, MB Bank, Techcombank",
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_phap_ly_mo_ta",
+            "label": "Mô tả chi tiết hồ sơ pháp lý",
+            "name": "phap_ly_mo_ta",
+            "type": "wysiwyg",
+            "instructions": "Thông tin bổ sung về tính pháp lý của dự án",
+            "required": 0,
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_tien_do_ngay_cap_nhat",
+            "label": "Thời điểm cập nhật tiến độ",
+            "name": "tien_do_ngay_cap_nhat",
+            "type": "text",
+            "instructions": "VD: Tháng 10/2026",
+            "required": 0,
+            "placeholder": "Tháng 10/2026",
+            "wrapper": {
+                "width": "35"
+            }
+        },
+        {
+            "key": "field_tien_do_ghi_chu",
+            "label": "Ghi chú tiến độ thi công",
+            "name": "tien_do_ghi_chu",
+            "type": "text",
+            "instructions": "VD: Đã cất nóc toàn bộ 3 tòa, đang hoàn thiện mặt ngoài và lát đá cảnh quan",
+            "required": 0,
+            "placeholder": "Đang thi công cất nóc...",
+            "wrapper": {
+                "width": "65"
+            }
+        },
+        {
+            "key": "field_tien_do_gallery",
+            "label": "Hình ảnh tiến độ thi công thực tế",
+            "name": "tien_do_gallery",
+            "type": "gallery",
+            "instructions": "Ảnh chụp flycam / công trường thực tế mới nhất",
+            "required": 0,
+            "return_format": "array",
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_tab_sec05_gia_chinh_sach",
+            "label": "💰 Giá & Chính sách",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_bang_gia_can_ho",
+            "label": "Bảng giá căn hộ theo loại hình",
+            "name": "bang_gia_can_ho",
+            "type": "repeater",
+            "instructions": "Phân rã khoảng giá theo từng loại hình căn hộ",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Thêm hàng giá",
+            "sub_fields": [
+                {
+                    "key": "field_bg_loai_hinh",
+                    "label": "Loại hình căn hộ",
+                    "name": "loai_hinh",
+                    "type": "text",
+                    "required": 1,
+                    "placeholder": "VD: Căn 2PN (2WC)"
+                },
+                {
+                    "key": "field_bg_dien_tich",
+                    "label": "Diện tích",
+                    "name": "dien_tich",
+                    "type": "text",
+                    "required": 0,
+                    "placeholder": "VD: 54 - 68 m²"
+                },
+                {
+                    "key": "field_bg_khoang_gia",
+                    "label": "Khoảng giá bán",
+                    "name": "khoang_gia",
+                    "type": "text",
+                    "required": 1,
+                    "placeholder": "VD: Từ 3.2 - 4.5 Tỷ"
+                },
+                {
+                    "key": "field_bg_tinh_trang",
+                    "label": "Tình trạng",
+                    "name": "tinh_trang",
+                    "type": "text",
+                    "required": 0,
+                    "placeholder": "Đang mở bán"
+                }
+            ],
+            "wrapper": {
+                "width": "100"
+            }
+        },
+        {
+            "key": "field_chinh_sach",
+            "label": "Chính sách bán hàng",
+            "name": "chinh_sach",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Nhập chính sách bán hàng của dự án",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_tieu_chuan_ban_giao",
+            "label": "Tiêu Chuẩn Bàn Giao & Danh Mục Hoàn Thiện",
+            "name": "tieu_chuan_ban_giao",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Chi tiết vật liệu hoàn thiện, trang thiết bị bàn giao đi kèm (cửa khóa, sàn gỗ/đá, thiết bị bếp, thiết bị vệ sinh...)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_tai_lieu_brochure",
+            "label": "Tài Liệu & Brochure Tải Về",
+            "name": "tai_lieu_brochure",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Upload file tài liệu hoặc brochure để người dùng có thể tải về",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf,doc,docx,xls,xlsx,ppt,pptx"
+        },
+        {
+            "key": "field_tab_faq",
+            "label": "❓ Câu hỏi thường gặp (FAQ)",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_cau_hoi_thuong_gap",
+            "label": "Câu hỏi thường gặp",
+            "name": "cau_hoi_thuong_gap",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Thêm các câu hỏi và câu trả lời cho dự án. Nếu để trống, hệ thống sẽ hiển thị FAQ mặc định.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Thêm câu hỏi",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_faq_question",
+                    "label": "Câu hỏi",
+                    "name": "cau_hoi",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Ví dụ: Thời gian bàn giao dự án là khi nào?",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_faq_answer",
+                    "label": "Câu trả lời",
+                    "name": "cau_tra_loi",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0
+                }
+            ]
+        },
+        {
+            "key": "field_tab_video_review",
+            "label": "🎬 Video Review (Sidebar)",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_du_an_video_du_an",
+            "label": "Danh sách Video Review & TikTok Dự Án",
+            "name": "video_du_an",
+            "type": "repeater",
+            "instructions": "Thêm các video review thực tế của chuyên viên về dự án trên TikTok hoặc YouTube.",
+            "required": 0,
+            "conditional_logic": 0,
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_du_an_video_title",
+            "button_label": "+ Thêm Video Review",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_du_an_video_title",
+                    "label": "Tiêu đề Video",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "Tiêu đề hoặc caption video (vd: Review thực tế căn hộ mẫu & tiện ích)",
+                    "placeholder": "Review thực tế căn hộ mẫu dự án...",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_platform",
+                    "label": "Nền tảng",
+                    "name": "platform",
+                    "type": "select",
+                    "instructions": "Chọn định dạng video",
+                    "choices": {
+                        "tiktok": "TikTok (Video dọc 9:16)",
+                        "youtube_shorts": "YouTube Shorts (Video dọc 9:16)",
+                        "youtube": "YouTube (Video ngang 16:9)"
+                    },
+                    "default_value": "tiktok",
+                    "wrapper": {
+                        "width": "40"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_url",
+                    "label": "Đường link Video (URL)",
+                    "name": "video_url",
+                    "type": "url",
+                    "instructions": "Link video TikTok hoặc YouTube",
+                    "placeholder": "https://www.tiktok.com/@.../video/... hoặc https://youtube.com/shorts/...",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_thumbnail",
+                    "label": "Ảnh bìa đại diện (Thumbnail)",
+                    "name": "thumbnail",
+                    "type": "image",
+                    "instructions": "Ảnh bìa video (khuyên dùng định dạng dọc 9:16 cho TikTok)",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_badge",
+                    "label": "Nhãn phân loại (Badge)",
+                    "name": "badge",
+                    "type": "text",
+                    "instructions": "Badge hiển thị trên video",
+                    "placeholder": "Review Thực Tế / Căn Hộ Mẫu / Flycam Tiến Độ",
+                    "default_value": "Review Thực Tế",
+                    "wrapper": {
+                        "width": "34"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_duration",
+                    "label": "Thời lượng",
+                    "name": "duration",
+                    "type": "text",
+                    "placeholder": "0:58 hoặc 1:15",
+                    "default_value": "0:58",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                },
+                {
+                    "key": "field_du_an_video_views",
+                    "label": "Lượt xem hiển thị",
+                    "name": "views",
+                    "type": "text",
+                    "placeholder": "38.5K view",
+                    "default_value": "35.2K view",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "du-an"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Tất cả các trường thông tin cho dự án bất động sản",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1793258139
+}

@@ -1,0 +1,123 @@
+
+
+# BEGIN LSCACHE
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule litespeed/debug/.*\.log$ - [F,L]
+RewriteRule (^|/)\.litespeed_conf\. - [F,L]
+</IfModule>
+<IfModule LiteSpeed>
+CacheLookup on
+RewriteRule .* - [E=Cache-Control:no-autoflush]
+
+### marker ASYNC start ###
+RewriteCond %{REQUEST_URI} /wp-admin/admin-ajax\.php
+RewriteCond %{QUERY_STRING} action=async_litespeed
+RewriteRule .* - [E=noabort:1]
+### marker ASYNC end ###
+
+### marker REST AUTH start ###
+RewriteCond %{HTTP:Authorization} !^$
+RewriteCond %{REQUEST_URI} /wp\-json(?:/|$) [OR]
+RewriteCond %{QUERY_STRING} (^|&)rest_route=
+RewriteRule .* - [E=Cache-Control:no-cache]
+### marker REST AUTH end ###
+
+### marker POSTPASS start ###
+RewriteCond %{HTTP_COOKIE} (^|;\s*)wp-postpass_471f6856f8018336c0a652fbbf67285e=
+RewriteRule .* - [E=Cache-Control:no-cache]
+### marker POSTPASS end ###
+
+### marker MOBILE start ###
+RewriteCond %{HTTP_USER_AGENT} Mobile|Android|Silk/|Kindle|BlackBerry|Opera\ Mini|Opera\ Mobi [NC]
+RewriteRule .* - [E=Cache-Control:vary=%{ENV:LSCACHE_VARY_VALUE}+ismobile]
+### marker MOBILE end ###
+
+### marker DROPQS start ###
+CacheKeyModify -qs:fbclid
+CacheKeyModify -qs:gclid
+CacheKeyModify -qs:utm*
+CacheKeyModify -qs:_ga
+### marker DROPQS end ###
+
+</IfModule>
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+# END LSCACHE
+# BEGIN NON_LSCACHE
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+### marker BROWSER CACHE start ###
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresByType application/pdf A31557600
+ExpiresByType image/x-icon A31557600
+ExpiresByType image/vnd.microsoft.icon A31557600
+ExpiresByType image/svg+xml A31557600
+
+ExpiresByType image/jpg A31557600
+ExpiresByType image/jpeg A31557600
+ExpiresByType image/png A31557600
+ExpiresByType image/gif A31557600
+ExpiresByType image/webp A31557600
+ExpiresByType image/avif A31557600
+
+ExpiresByType video/ogg A31557600
+ExpiresByType audio/ogg A31557600
+ExpiresByType video/mp4 A31557600
+ExpiresByType video/webm A31557600
+
+ExpiresByType text/css A31557600
+ExpiresByType text/javascript A31557600
+ExpiresByType application/javascript A31557600
+ExpiresByType application/x-javascript A31557600
+
+ExpiresByType application/x-font-ttf A31557600
+ExpiresByType application/x-font-woff A31557600
+ExpiresByType application/font-woff A31557600
+ExpiresByType application/font-woff2 A31557600
+ExpiresByType application/vnd.ms-fontobject A31557600
+ExpiresByType font/ttf A31557600
+ExpiresByType font/otf A31557600
+ExpiresByType font/woff A31557600
+ExpiresByType font/woff2 A31557600
+
+</IfModule>
+### marker BROWSER CACHE end ###
+
+## LITESPEED WP CACHE PLUGIN - Do not edit the contents of this block! ##
+# END NON_LSCACHE
+
+# BEGIN WordPress
+# Các nội dung nằm giữa "BEGIN WordPress" và "END WordPress" được tạo ra tự động, và chỉ nên được thay đổi thông qua các filter của WordPress. Mọi thay đổi tới thành phần này có thể sẽ bị mất và ghi đè.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+# SECURITY HARDENING
+# Block access to wp-config.php
+<Files wp-config.php>
+order allow,deny
+deny from all
+</Files>
+
+# Block access to xmlrpc.php
+<Files xmlrpc.php>
+order allow,deny
+deny from all
+</Files>
+
+# Disable Directory Listings
+Options -Indexes
+
+# Protect .htaccess itself
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>

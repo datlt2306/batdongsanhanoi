@@ -1,0 +1,103 @@
+# ==============================================================================
+# WordPress .gitignore
+# Dự án: batdongsanhanoi (app/public)
+# ==============================================================================
+
+# --- Operating System Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- Editor / IDE Files ---
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# --- Environment & Sensitive Files ---
+.env
+.env.*
+!.env.example
+wp-config.php
+.htaccess.bk
+*.pem
+*.key
+*.crt
+
+# --- Local by Flywheel & Debugging Scripts ---
+local-phpinfo.php
+local-xdebuginfo.php
+.user.ini
+
+# --- Logs & Error Reports ---
+*.log
+error_log
+wp-content/debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Database Dumps & Archives ---
+*.sql
+*.sql.gz
+*.sqlite
+*.tar
+*.gz
+*.zip
+*.7z
+
+# --- WordPress Media & Uploads ---
+wp-content/uploads/
+wp-content/blogs.dir/
+
+# --- WordPress Cache & Optimizer Files ---
+wp-content/cache/
+wp-content/litespeed/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/w3tc-config/
+
+# --- Backup & Migration Plugins ---
+wp-content/ai1wm-backups/
+wp-content/aiowps_backups/
+wp-content/updraft/
+wp-content/backups/
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+
+# --- Security Plugins & Firewall Logs ---
+wp-content/wflogs/
+wp-content/vietshield*
+
+# --- Node / Build Dependencies (Themes & Plugins) ---
+node_modules/
+.npm
+.parcel-cache/
+
+# --- Generated Sitemaps ---
+sitemap.xml
+sitemap.xml.gz
+
+# WordPress Core
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/index.php
+/license.txt
+/readme.html
+
+# Plugins & Languages
+/wp-content/plugins/
+/wp-content/languages/
+/wp-content/fonts/
+/wp-content/mu-plugins/

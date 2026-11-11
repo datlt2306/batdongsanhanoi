@@ -1,0 +1,31 @@
+{
+    "key": "taxonomy_phan_khu",
+    "title": "Khu (Block / Tòa / Phân khu)",
+    "name": "phan-khu",
+    "object_types": ["bat-dong-san", "hang-chuyen-nhuong"],
+    "description": "Vị trí trong dự án: Block hoặc Tòa (chung cư), Phân khu (biệt thự, liền kề). Ví dụ: Block 1, Tòa S1, Phân khu biệt thự. Click vào term sẽ hiển thị danh sách BĐS thuộc khu đó.",
+    "hierarchical": 1,
+    "show_ui": 1,
+    "show_in_menu": 1,
+    "show_in_nav_menus": 1,
+    "show_admin_column": 1,
+    "rewrite": {"slug": "phan-khu", "with_front": 1, "hierarchical": 0},
+    "show_in_rest": 1,
+    "rest_base": "phan-khu",
+    "labels": {
+        "name": "Khu (Block / Tòa / Phân khu)",
+        "singular_name": "Khu",
+        "menu_name": "Khu (Block / Tòa / Phân khu)",
+        "all_items": "Tất cả Khu",
+        "edit_item": "Sửa Khu",
+        "view_item": "Xem Khu",
+        "update_item": "Cập nhật Khu",
+        "add_new_item": "Thêm Khu mới",
+        "new_item_name": "Tên Khu mới",
+        "parent_item": "Khu cha",
+        "parent_item_colon": "Khu cha:",
+        "search_items": "Tìm Khu",
+        "no_terms": "Không tìm thấy Khu nào",
+        "items_list": "Danh sách Khu"
+    }
+}

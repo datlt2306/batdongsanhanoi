@@ -1,0 +1,543 @@
+{
+    "key": "group_bat_dong_san_fields",
+    "title": "Thông tin bất động sản",
+    "fields": [
+        {
+            "key": "field_gallery_nha_dat",
+            "label": "Hình ảnh bất động sản",
+            "name": "gallery_nha_dat",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "📐 Kích thước khuyến nghị: 1200 x 800px (tỉ lệ 3:2) hoặc 1200 x 900px (4:3). Tối thiểu 800 x 533px. Dung lượng tối ưu < 300KB/ảnh (WebP, JPG). Ảnh đầu tiên sẽ hiển thị làm ảnh đại diện tin đăng.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_video_url",
+            "label": "Video Review URL (TikTok / YouTube / Shorts)",
+            "name": "video_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Nhập link video TikTok hoặc YouTube review thực tế căn nhà/căn hộ. Ví dụ: https://www.tiktok.com/@.../video/... hoặc https://youtube.com/watch?v=...",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "https://www.tiktok.com/@.../video/..."
+        },
+        {
+            "key": "field_bds_video_title",
+            "label": "Tiêu đề Video Review",
+            "name": "video_title",
+            "type": "text",
+            "instructions": "Tiêu đề hoặc điểm nhấn video (vd: Review thực tế căn 2PN ban công Đông Nam)",
+            "required": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_bds_video_thumbnail",
+            "label": "Ảnh bìa đại diện Video (Khuyên dùng cho TikTok)",
+            "name": "video_thumbnail",
+            "type": "image",
+            "instructions": "Ảnh bìa định dạng dọc (nếu để trống sẽ tự lấy ảnh đại diện của tin)",
+            "required": 0,
+            "return_format": "id",
+            "preview_size": "medium",
+            "wrapper": {
+                "width": "40"
+            }
+        },
+        {
+            "key": "field_bds_video_badge",
+            "label": "Nhãn phân loại (Badge)",
+            "name": "video_badge",
+            "type": "text",
+            "default_value": "Review Thực Tế",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_bds_video_duration",
+            "label": "Thời lượng",
+            "name": "video_duration",
+            "type": "text",
+            "default_value": "0:55",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_loai_hinh_bds_tax",
+            "label": "Loại hình BĐS",
+            "name": "loai_hinh_bat_dong_san",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Chọn loại hình bất động sản",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "loai_hinh_bat_dong_san",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "multiple": 0,
+            "load_post_terms": 1
+        },
+        {
+            "key": "field_hinh_thuc_bds_tax",
+            "label": "Hình thức giao dịch",
+            "name": "hinh_thuc_bat_dong_san",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Chọn hình thức (Sơ cấp, Chuyển nhượng, Cho thuê)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "hinh-thuc-bds",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "multiple": 0,
+            "load_post_terms": 1
+        },
+        {
+            "key": "field_khoang_gia",
+            "label": "Giá bán",
+            "name": "khoang_gia",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nhập giá bán, ví dụ: 64 tỷ, 5.5 tỷ, Liên hệ...",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "64 tỷ",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gia_tren_met_vuong",
+            "label": "Giá trên mét vuông",
+            "name": "gia_tren_met_vuong",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ví dụ: ~438,36 triệu\/m²",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "~438,36 triệu\/m²",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gia_cho_thue",
+            "label": "Giá cho thuê",
+            "name": "gia_cho_thue",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nếu đang cho thuê, nhập giá thuê. Ví dụ: 180 tr\/tháng",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "180 tr\/tháng",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_dien_tich",
+            "label": "Diện tích",
+            "name": "dien_tich",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Diện tích đất, ví dụ: 146 m²",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "146 m²",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_dien_tich_su_dung",
+            "label": "Diện tích sử dụng",
+            "name": "dien_tich_su_dung",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Diện tích sử dụng thực tế, ví dụ: hơn 600m vuông",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "hơn 600m vuông",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_mat_tien",
+            "label": "Mặt tiền",
+            "name": "mat_tien",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Chiều rộng mặt tiền, ví dụ: 22 m",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "22 m",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_so_mat_tien",
+            "label": "Số mặt tiền",
+            "name": "so_mat_tien",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Chọn số mặt tiền của nhà đất",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "1 mặt tiền",
+                "2": "2 mặt tiền",
+                "3": "3 mặt tiền",
+                "4": "4 mặt tiền trở lên"
+            },
+            "default_value": 1,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_so_tang",
+            "label": "Số tầng",
+            "name": "so_tang",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Số tầng của nhà, ví dụ: 3 tầng",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "3 tầng",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_phap_ly",
+            "label": "Pháp lý",
+            "name": "phap_ly",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Chọn loại giấy tờ pháp lý",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "so_do": "Sổ đỏ",
+                "so_hong": "Sổ hồng",
+                "so_do_so_hong": "Sổ đỏ\/ Sổ hồng",
+                "dang_ky_quyen_su_dung_dat": "Đang ký quyền sử dụng đất",
+                "giay_chung_nhan": "Giấy chứng nhận",
+                "khac": "Khác"
+            },
+            "default_value": "so_do_so_hong",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_huong_nha",
+            "label": "Hướng nhà",
+            "name": "huong_nha",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Chọn hướng nhà",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dong": "Đông",
+                "tay": "Tây",
+                "nam": "Nam",
+                "bac": "Bắc",
+                "dong_bac": "Đông Bắc",
+                "dong_nam": "Đông Nam",
+                "tay_bac": "Tây Bắc",
+                "tay_nam": "Tây Nam"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_duong_vao",
+            "label": "Đường vào",
+            "name": "duong_vao",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Thông tin về đường vào, ví dụ: 5m, 6m...",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "5m",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_dia_chi",
+            "label": "Địa chỉ",
+            "name": "dia_chi",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Nhập địa chỉ chi tiết của nhà đất",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Đường Lê Duẩn, Phường Hải Châu II, Hải Châu, Đà Nẵng",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_google_map",
+            "label": "Bản đồ Google Maps (Embed)",
+            "name": "google_map",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Dán embed code từ Google Maps (iframe) vào đây",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=...\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"><\/iframe>",
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_thiet_ke",
+            "label": "Thiết kế",
+            "name": "thiet_ke",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Mô tả về thiết kế, ví dụ: trống thông suốt 3 tầng và tầng sân thượng",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Thiết kế hiện đại, trống thông suốt 3 tầng và tầng sân thượng",
+            "rows": 5,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_trang_thai",
+            "label": "Trạng thái",
+            "name": "trang_thai",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Trạng thái của nhà đất",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dang_ban": "Đang bán",
+                "da_ban": "Đã bán",
+                "dang_cho_thue": "Đang cho thuê",
+                "tam_dung": "Tạm dừng"
+            },
+            "default_value": "dang_ban",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ngay_dang",
+            "label": "Ngày đăng",
+            "name": "ngay_dang",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "Ngày đăng tin",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_ngay_het_han",
+            "label": "Ngày hết hạn",
+            "name": "ngay_het_han",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "Ngày hết hạn tin đăng",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "bat-dong-san"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Tất cả các trường thông tin cho sản phẩm BĐS",
+    "show_in_rest": 0,
+    "modified": 1741160000
+}

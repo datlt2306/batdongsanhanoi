@@ -1,0 +1,69 @@
+{
+    "key": "group_banner_fields",
+    "title": "Thông tin Banner",
+    "fields": [
+        {
+            "key": "field_banner_image",
+            "label": "Ảnh Banner",
+            "name": "banner_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "📐 Kích thước khuyến nghị: 1920 x 720px hoặc 1920 x 600px (tỉ lệ ~21:9 hoặc 16:9 ngang). Tối thiểu 1440 x 540px. Dung lượng tối ưu < 400KB (WebP, JPG). Hiển thị toàn màn hình trên slider trang chủ.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_banner_link",
+            "label": "Link",
+            "name": "banner_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "URL khi click vào banner (tùy chọn)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "banner"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Thông tin banner: ảnh và link",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1735894604
+}
+
