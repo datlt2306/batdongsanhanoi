@@ -1,0 +1,128 @@
+name: Deploy BatDongSanHaNoi to VPS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-and-build:
+    name: 🧪 Test & Build Theme Assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, json
+
+      - name: Run E2E Test Suite
+        run: |
+          php wp-content/themes/batdongsan/tests/run-e2e-tests.php
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: wp-content/themes/batdongsan/package-lock.json
+
+      - name: Install Dependencies & Build Theme Assets
+        working-directory: wp-content/themes/batdongsan
+        run: |
+          npm ci
+          npm run build
+          tar -czf built-assets.tar.gz assets/css/ js/main.bundle.js
+
+      - name: Upload Built Assets Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-built-assets
+          path: wp-content/themes/batdongsan/built-assets.tar.gz
+          retention-days: 1
+
+  deploy:
+    name: 🚀 Deploy to VPS (batdongsanhanoi)
+    needs: test-and-build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Built Assets Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: theme-built-assets
+          path: wp-content/themes/batdongsan
+
+      - name: Extract Built Assets
+        working-directory: wp-content/themes/batdongsan
+        run: |
+          tar -xzf built-assets.tar.gz
+          rm -f built-assets.tar.gz
+
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Add VPS to Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.VPS_PORT || 22 }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Code to VPS via Rsync
+        run: |
+          SSH_PORT="${{ secrets.VPS_PORT || '22' }}"
+          TARGET_DIR="${{ secrets.VPS_TARGET_DIR }}"
+
+          echo "Bắt đầu deploy lên ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:$TARGET_DIR..."
+
+          # 1. Đồng bộ thư mục Theme batdongsan (chỉ --delete trong thư mục theme, an toàn tuyệt đối)
+          rsync -avz --delete \
+            -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
+            --exclude='.git*' \
+            --exclude='node_modules' \
+            --exclude='.agents' \
+            --exclude='.vscode' \
+            --exclude='tests' \
+            --exclude='*.md' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='postcss.config.js' \
+            --exclude='src' \
+            wp-content/themes/batdongsan/ ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:$TARGET_DIR/wp-content/themes/batdongsan/
+
+          # 2. Đồng bộ file llms.txt ở root (giữ nguyên .htaccess production trên VPS)
+          if [ -f "llms.txt" ]; then
+            rsync -avz \
+              -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
+              llms.txt \
+              ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:$TARGET_DIR/
+          fi
+
+      - name: Post-deployment Tasks on VPS (Docker & WP-CLI)
+        run: |
+          SSH_PORT="${{ secrets.VPS_PORT || '22' }}"
+          TARGET_DIR="${{ secrets.VPS_TARGET_DIR }}"
+
+          ssh -p $SSH_PORT -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "
+            # Phân quyền 1000:33 (datlt2306:www-data) qua container để cả SSH và WordPress đều đọc/ghi chuẩn
+            docker exec -u 0 batdongsan_wordpress sh -c 'chown -R 1000:33 /var/www/html/wp-content/themes/batdongsan && chmod -R 775 /var/www/html/wp-content/themes/batdongsan' || true
+
+            # Xoá cache WordPress qua WP-CLI trong Docker container
+            docker exec -u 33 batdongsan_wordpress wp cache flush || true
+            docker exec -u 33 batdongsan_wordpress wp litespeed-purge all 2>/dev/null || true
+
+            echo '✅ Deploy thành công lên VPS (batdongsan_wordpress)!'
+          "
