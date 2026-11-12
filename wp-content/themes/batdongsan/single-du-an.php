@@ -12,6 +12,14 @@ if (have_posts()) :
     while (have_posts()) : the_post();
         $project_id = get_the_ID();
 
+        // Helper làm sạch text dấu ngoặc vuông thô từ dữ liệu nháp (VD: "[Đang cập nhật từ CĐT]" -> "Đang cập nhật")
+        $clean_draft_text = function ($val, $fallback = 'Đang cập nhật') {
+            $str = trim((string) $val);
+            if ($str === '') return $fallback;
+            $str = preg_replace('/^\[(.*)\]$/u', '$1', $str);
+            return trim($str);
+        };
+
         // Kiểm tra xem đây là Phân khu hay Dự án lớn
         $du_an_cha = get_field('du_an_cha', $project_id);
         $is_subdivision = !empty($du_an_cha);
@@ -23,6 +31,10 @@ if (have_posts()) :
         $map_embed = batdongsan_get_project_meta_recursive('map_embed', $project_id);
         $gallery_du_an = batdongsan_get_project_meta_recursive('gallery_du_an', $project_id) ?: [];
 
+        $dien_tich = function_exists('batdongsan_get_project_meta_recursive')
+            ? batdongsan_get_project_meta_recursive('dien_tich', $project_id)
+            : get_field('dien_tich', $project_id);
+
         $so_can = get_field('so_can', $project_id);
         $so_toa = get_field('so_toa', $project_id);
         if (!$so_toa) {
@@ -32,6 +44,8 @@ if (have_posts()) :
         }
         $ban_giao = get_field('ban_giao', $project_id);
         $tien_ich = get_field('tien_ich', $project_id);
+        $tien_ich_ngoai_khu = get_field('tien_ich_ngoai_khu', $project_id);
+        $danh_sach_loai_can_ho = get_field('danh_sach_loai_can_ho', $project_id) ?: [];
         $chinh_sach = get_field('chinh_sach', $project_id);
         $thu_vien_anh = get_field('thu_vien_anh', $project_id);
         $mat_bang_gallery = get_field('mat_bang_gallery', $project_id);
@@ -40,7 +54,15 @@ if (have_posts()) :
             $price_val = batdongsan_get_project_meta_recursive('price', $project_id);
             if ($price_val) {
                 $price_str = trim((string) $price_val);
-                $gia_ban_du_kien = preg_match('/tỷ|triệu|m2/iu', $price_str) ? $price_str : 'Từ ' . $price_str . ' tỷ';
+                if (preg_match('/cập nhật|liên hệ|thỏa thuận|chưa có/iu', $price_str)) {
+                    $gia_ban_du_kien = 'Liên hệ báo giá';
+                } elseif (is_numeric(str_replace([',', ' '], ['.', ''], $price_str))) {
+                    $gia_ban_du_kien = 'Từ ' . $price_str . ' tỷ';
+                } elseif (preg_match('/tỷ|triệu|m2|m²/iu', $price_str)) {
+                    $gia_ban_du_kien = preg_match('/^(từ|chỉ từ|khoảng)/iu', $price_str) ? $price_str : 'Từ ' . $price_str;
+                } else {
+                    $gia_ban_du_kien = $price_str;
+                }
             }
         }
 
@@ -297,13 +319,21 @@ if (have_posts()) :
                             </div>
 
                             <!-- Right: Price & Fast CTA Button + Prominent Share -->
-                            <div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-2.5 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-black/[0.06]">
+                            <div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-3 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-black/[0.06]">
                                 <?php if (!empty($gia_ban_du_kien)) : ?>
-                                    <div class="text-left md:text-right">
-                                        <span class="block text-[11px] font-medium uppercase tracking-wider text-charcoal-muted leading-tight">Giá bán dự kiến</span>
-                                        <span class="text-2xl sm:text-[28px] font-extrabold text-primary tracking-tight font-sans leading-tight">
-                                            <?php echo esc_html($gia_ban_du_kien); ?>
-                                        </span>
+                                    <?php $is_contact_price = (mb_stripos($gia_ban_du_kien, "liên hệ") !== false); ?>
+                                    <div class="text-left md:text-right flex flex-col md:items-end">
+                                        <span class="text-[11px] font-semibold uppercase tracking-wider text-charcoal-muted/90 block mb-0.5">Giá bán dự kiến</span>
+                                        <?php if ($is_contact_price) : ?>
+                                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-sm sm:text-base">
+                                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                                <span>Liên hệ nhận báo giá</span>
+                                            </div>
+                                        <?php else : ?>
+                                            <span class="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight font-sans leading-none">
+                                                <?php echo esc_html($gia_ban_du_kien); ?>
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
                                 
@@ -596,13 +626,16 @@ if (have_posts()) :
                 $danh_sach_mat_bang   = get_field('danh_sach_mat_bang', $project_id) ?: [];
                 $has_floorplan        = !empty($danh_sach_mat_bang) || !empty($mat_bang_images);
                 $has_location         = (bool) ($map_embed || !empty($vi_tri_lien_ket_items) || !empty($address));
-                $has_amenities        = !empty($tien_ich) && trim($tien_ich) !== '';
+                $has_amenities_internal = !empty($tien_ich) && trim(strip_tags($tien_ich)) !== '';
+                $has_amenities_external = !empty($tien_ich_ngoai_khu) && trim(strip_tags($tien_ich_ngoai_khu)) !== '';
+                $has_amenities        = $has_amenities_internal || $has_amenities_external;
+                $has_unit_types       = !empty($danh_sach_loai_can_ho) || !empty($bang_gia_can_ho);
                 $project_videos       = function_exists('batdongsan_get_project_videos') ? batdongsan_get_project_videos($project_id) : [];
                 $has_videos           = !empty($project_videos);
 
                 // Điều kiện hiển thị 6 Section chính
                 $has_sec_location_amenities = $has_location || $has_amenities;
-                $has_sec_floorplan_products = $has_floorplan || !empty($all_display_gallery) || !empty($bang_gia_can_ho);
+                $has_sec_floorplan_products = $has_floorplan || !empty($all_display_gallery) || $has_unit_types;
                 $has_sec_legal_progress     = $has_legal || $has_gallery_progress;
                 $has_sec_pricing_policy     = true; // Bảng giá, chính sách, bàn giao & công cụ tính khoản vay
 
@@ -761,37 +794,37 @@ if (have_posts()) :
                             <div class="grid grid-cols-1 md:grid-cols-2 md:gap-x-10 lg:gap-x-16 mb-6 pb-2 border-b border-border/60">
                                 <!-- Cột 1 -->
                                 <div class="flex flex-col">
-                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px]">
-                                        <span class="font-bold text-charcoal">Số căn hộ</span>
-                                        <span class="text-charcoal"><?php echo esc_html($so_can ?: 'Đang cập nhật'); ?></span>
+                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px] gap-3 sm:gap-4">
+                                        <span class="font-bold text-charcoal shrink-0 whitespace-nowrap">Số căn hộ</span>
+                                        <span class="text-charcoal font-medium text-right min-w-0"><?php echo esc_html($so_can ?: 'Đang cập nhật'); ?></span>
                                     </div>
-                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px]">
-                                        <span class="font-bold text-charcoal">Số tòa</span>
-                                        <span class="text-charcoal"><?php echo esc_html($so_toa ?: '1 tòa'); ?></span>
+                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px] gap-3 sm:gap-4">
+                                        <span class="font-bold text-charcoal shrink-0 whitespace-nowrap">Số tòa</span>
+                                        <span class="text-charcoal font-medium text-right min-w-0"><?php echo esc_html($so_toa ?: '1 tòa'); ?></span>
                                     </div>
-                                    <div class="flex items-center justify-between py-3 border-b border-border/60 md:border-b-0 text-sm md:text-[14.5px]">
-                                        <span class="font-bold text-charcoal">Pháp lý</span>
-                                        <span class="text-charcoal"><?php echo esc_html($phap_ly ?: 'Sở hữu lâu dài'); ?></span>
+                                    <div class="flex items-center justify-between py-3 border-b border-border/60 md:border-b-0 text-sm md:text-[14.5px] gap-3 sm:gap-4">
+                                        <span class="font-bold text-charcoal shrink-0 whitespace-nowrap">Pháp lý</span>
+                                        <span class="text-charcoal font-medium text-right min-w-0"><?php echo esc_html($phap_ly ?: 'Sở hữu lâu dài'); ?></span>
                                     </div>
                                 </div>
                                 <!-- Cột 2 -->
                                 <div class="flex flex-col">
-                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px]">
-                                        <span class="font-bold text-charcoal">Diện tích</span>
-                                        <span class="text-charcoal"><?php echo esc_html($quy_mo ?: 'Đang cập nhật'); ?></span>
+                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px] gap-3 sm:gap-4">
+                                        <span class="font-bold text-charcoal shrink-0 whitespace-nowrap"><?php echo !empty($quy_mo) ? 'Quy mô' : 'Diện tích'; ?></span>
+                                        <span class="text-charcoal font-medium text-right min-w-0"><?php echo esc_html($quy_mo ?: ($dien_tich ?? 'Đang cập nhật')); ?></span>
                                     </div>
-                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px]">
-                                        <span class="font-bold text-charcoal shrink-0 mr-4">Chủ đầu tư</span>
-                                        <span class="font-bold text-primary text-right line-clamp-1" title="<?php echo esc_attr($chu_dau_tu); ?>"><?php echo esc_html($chu_dau_tu ?: 'Đang cập nhật'); ?></span>
+                                    <div class="flex items-center justify-between py-3 border-b border-border/60 text-sm md:text-[14.5px] gap-3 sm:gap-4">
+                                        <span class="font-bold text-charcoal shrink-0 whitespace-nowrap mr-2">Chủ đầu tư</span>
+                                        <span class="font-bold text-primary text-right min-w-0 truncate" title="<?php echo esc_attr($chu_dau_tu); ?>"><?php echo esc_html($chu_dau_tu ?: 'Đang cập nhật'); ?></span>
                                     </div>
                                     <?php if ($ban_giao || !empty($gia_ban_du_kien)) : ?>
-                                        <div class="flex items-center justify-between py-3 border-b-0 text-sm md:text-[14.5px]">
+                                        <div class="flex items-center justify-between py-3 border-b-0 text-sm md:text-[14.5px] gap-3 sm:gap-4">
                                             <?php if ($ban_giao): ?>
-                                                <span class="font-bold text-charcoal">Bàn giao</span>
-                                                <span class="text-charcoal"><?php echo esc_html($ban_giao); ?></span>
+                                                <span class="font-bold text-charcoal shrink-0 whitespace-nowrap">Bàn giao</span>
+                                                <span class="text-charcoal font-medium text-right min-w-0"><?php echo esc_html($ban_giao); ?></span>
                                             <?php else: ?>
-                                                <span class="font-bold text-charcoal">Giá dự kiến</span>
-                                                <span class="font-bold text-primary"><?php echo esc_html($gia_ban_du_kien); ?></span>
+                                                <span class="font-bold text-charcoal shrink-0 whitespace-nowrap">Giá dự kiến</span>
+                                                <span class="font-bold text-primary text-right min-w-0"><?php echo esc_html($gia_ban_du_kien); ?></span>
                                             <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
@@ -814,7 +847,7 @@ if (have_posts()) :
                             }
                             ?>
                             <div id="<?php echo esc_attr($desc_id); ?>" class="project-detail__description-container <?php echo $has_long_desc ? 'is-collapsed' : ''; ?>">
-                                <div class="text-charcoal leading-relaxed max-lg:text-sm overflow-x-hidden [&_p]:mb-4 [&_p:last-child]:mb-0 [&_img]:w-full [&_img]:h-auto [&_img]:block [&_img]:rounded-xl [&_figure]:w-full">
+                                <div class="project-detail__description text-charcoal leading-relaxed max-lg:text-sm overflow-x-hidden [&_p]:mb-4 [&_p:last-child]:mb-0 [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-charcoal [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base sm:[&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-charcoal [&_h3]:mt-4 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-2 [&_ol]:mb-4 [&_li]:text-charcoal/90 [&_strong]:text-charcoal [&_strong]:font-bold [&_hr]:my-6 [&_hr]:border-border/60 [&_img]:w-full [&_img]:h-auto [&_img]:block [&_img]:rounded-xl [&_figure]:w-full">
                                     <?php echo $description_html; ?>
                                 </div>
                             </div>
@@ -861,16 +894,18 @@ if (have_posts()) :
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
                                         <span>1. Vị trí &amp; Bản đồ</span>
                                     </button>
-                                    <?php if ($has_amenities): ?>
+                                    <?php if ($has_amenities_internal): ?>
                                         <button type="button" role="tab" aria-selected="false" class="bds-section-tab-btn" data-section-tab-btn="amenities-internal" data-tab-group="location-amenities">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
                                             <span>2. Tiện ích nội khu</span>
                                         </button>
                                     <?php endif; ?>
-                                    <button type="button" role="tab" aria-selected="false" class="bds-section-tab-btn" data-section-tab-btn="amenities-external" data-tab-group="location-amenities">
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                                        <span>3. Tiện ích ngoại khu</span>
-                                    </button>
+                                    <?php if ($has_amenities_external): ?>
+                                        <button type="button" role="tab" aria-selected="false" class="bds-section-tab-btn" data-section-tab-btn="amenities-external" data-tab-group="location-amenities">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                                            <span>3. Tiện ích ngoại khu</span>
+                                        </button>
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Tab Panel 1: Vị trí & Bản đồ -->
@@ -936,80 +971,30 @@ if (have_posts()) :
                                 </div>
 
                                 <!-- Tab Panel 2: Tiện ích nội khu -->
-                                <?php if ($has_amenities): ?>
+                                <?php if ($has_amenities_internal): ?>
                                     <div data-section-tab-panel="amenities-internal" data-tab-group="location-amenities" class="hidden">
                                         <div class="mb-4">
-                                            <h3 class="text-base font-bold text-charcoal m-0 mb-1">Hệ sinh thái tiện ích nội khu đặc quyền</h3>
-                                            <p class="text-xs text-charcoal-muted m-0">Không gian sống xanh, tiện nghi all-in-one phục vụ cư dân chuẩn chất lượng 5 sao.</p>
+                                            <h3 class="text-base font-bold text-charcoal m-0 mb-1">Hệ sinh thái tiện ích nội khu</h3>
+                                            <p class="text-xs text-charcoal-muted m-0">Không gian sống xanh, tiện nghi đặc quyền phục vụ cư dân tại <?php echo esc_html(get_the_title()); ?>.</p>
                                         </div>
-                                        <div class="text-charcoal leading-relaxed text-xs sm:text-sm">
+                                        <div class="text-charcoal leading-relaxed text-xs sm:text-sm [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-2 [&_p]:mb-3">
                                             <?php echo wp_kses_post($tien_ich); ?>
                                         </div>
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- Tab Panel 3: Tiện ích ngoại khu -->
-                                <div data-section-tab-panel="amenities-external" data-tab-group="location-amenities" class="hidden">
-                                    <div class="mb-4">
-                                        <h3 class="text-base font-bold text-charcoal m-0 mb-1">Mạng lưới tiện ích ngoại khu &amp; Liên kết vùng</h3>
-                                        <p class="text-xs text-charcoal-muted m-0">Hạ tầng đồng bộ xung quanh dự án <?php echo esc_html(get_the_title()); ?> trong bán kính 1 - 5km.</p>
-                                    </div>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-4">
-                                        <div class="p-4 rounded-xl bg-canvas border border-border/70 hover:border-primary/40 transition-colors">
-                                            <div class="flex items-center gap-2.5 mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs">🚇</div>
-                                                <h4 class="font-bold text-charcoal text-sm m-0">Giao thông &amp; Đi lại</h4>
-                                            </div>
-                                            <ul class="text-xs text-charcoal-muted space-y-1.5 m-0 pl-4 list-disc">
-                                                <li>Ga Metro &amp; các tuyến đường sắt đô thị (3 - 5 phút đi bộ)</li>
-                                                <li>Trục đường vành đai và đại lộ huyết mạch liên quận</li>
-                                                <li>Sân bay quốc tế Nội Bài &amp; các bến xe trung tâm (20 - 30 phút)</li>
-                                            </ul>
+                                <!-- Tab Panel 3: Tiện ích ngoại khu (Chỉ hiển thị khi có dữ liệu thật do Admin nhập) -->
+                                <?php if ($has_amenities_external): ?>
+                                    <div data-section-tab-panel="amenities-external" data-tab-group="location-amenities" class="hidden">
+                                        <div class="mb-4">
+                                            <h3 class="text-base font-bold text-charcoal m-0 mb-1">Tiện ích ngoại khu &amp; Liên kết vùng</h3>
+                                            <p class="text-xs text-charcoal-muted m-0">Mạng lưới hạ tầng giao thông, giáo dục, y tế và thương mại xung quanh dự án.</p>
                                         </div>
-                                        <div class="p-4 rounded-xl bg-canvas border border-border/70 hover:border-primary/40 transition-colors">
-                                            <div class="flex items-center gap-2.5 mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-xs">🎓</div>
-                                                <h4 class="font-bold text-charcoal text-sm m-0">Giáo dục &amp; Đào tạo</h4>
-                                            </div>
-                                            <ul class="text-xs text-charcoal-muted space-y-1.5 m-0 pl-4 list-disc">
-                                                <li>Hệ thống trường mầm non &amp; liên cấp quốc tế chuẩn Cambridge</li>
-                                                <li>Các trường Đại học Quốc gia, Sư phạm, Báo chí, Ngoại thương</li>
-                                                <li>Trường THPT Chuyên Hà Nội - Amsterdam, Chu Văn An</li>
-                                            </ul>
-                                        </div>
-                                        <div class="p-4 rounded-xl bg-canvas border border-border/70 hover:border-primary/40 transition-colors">
-                                            <div class="flex items-center gap-2.5 mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-xs">🏥</div>
-                                                <h4 class="font-bold text-charcoal text-sm m-0">Y tế &amp; Chăm sóc sức khỏe</h4>
-                                            </div>
-                                            <ul class="text-xs text-charcoal-muted space-y-1.5 m-0 pl-4 list-disc">
-                                                <li>Bệnh viện Huyết học, Bệnh viện E, Bệnh viện 198 Bộ Công An</li>
-                                                <li>Hệ thống phòng khám đa khoa quốc tế Thu Cúc, Vinmec</li>
-                                                <li>Trung tâm tiêm chủng và viện chăm sóc sức khỏe cộng đồng</li>
-                                            </ul>
-                                        </div>
-                                        <div class="p-4 rounded-xl bg-canvas border border-border/70 hover:border-primary/40 transition-colors">
-                                            <div class="flex items-center gap-2.5 mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs">🛍️</div>
-                                                <h4 class="font-bold text-charcoal text-sm m-0">Thương mại &amp; Giải trí</h4>
-                                            </div>
-                                            <ul class="text-xs text-charcoal-muted space-y-1.5 m-0 pl-4 list-disc">
-                                                <li>Trung tâm thương mại Lotte Mall, Discovery Shopping Center, IPH</li>
-                                                <li>Hệ thống công viên điều hòa Cầu Giấy, Nghĩa Đô, Thủ Lệ</li>
-                                                <li>Khu ẩm thực, cafe phố đi bộ và giải trí về đêm</li>
-                                            </ul>
+                                        <div class="text-charcoal leading-relaxed text-xs sm:text-sm [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-2 [&_p]:mb-3">
+                                            <?php echo wp_kses_post($tien_ich_ngoai_khu); ?>
                                         </div>
                                     </div>
-                                    <div class="p-4 rounded-xl bg-primary/5 border border-primary/15 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-                                        <div class="flex items-center gap-2 text-charcoal">
-                                            <svg class="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            <span>Quý khách cần kiểm tra khoảng cách di chuyển từ dự án đến nơi làm việc / trường học của gia đình?</span>
-                                        </div>
-                                        <button type="button" class="px-4 py-2 bg-primary text-white font-semibold rounded-full hover:bg-primary-hover shadow-button shrink-0 cursor-pointer" data-modal-target="advisor-modal">
-                                            Nhận Tư Vấn Liên Kết Vùng
-                                        </button>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         <?php endif; ?>
 
@@ -1046,11 +1031,11 @@ if (have_posts()) :
                                         </button>
                                     <?php endif; ?>
 
-                                    <?php if (!empty($bang_gia_can_ho)): ?>
+                                    <?php if ($has_unit_types): ?>
                                         <button type="button" role="tab" aria-selected="false" class="bds-section-tab-btn" data-section-tab-btn="unit-types" data-tab-group="floorplan-products">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.75a.75.75 0 00-.75-.75h-9a.75.75 0 00-.75.75V21h4.5z"/></svg>
                                             <span>3. Loại căn hộ</span>
-                                            <span class="bds-section-tab-badge"><?php echo count($bang_gia_can_ho); ?></span>
+                                            <span class="bds-section-tab-badge"><?php echo !empty($danh_sach_loai_can_ho) ? count($danh_sach_loai_can_ho) : count($bang_gia_can_ho); ?></span>
                                         </button>
                                     <?php endif; ?>
 
@@ -1105,59 +1090,111 @@ if (have_posts()) :
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- Tab Panel 3: Loại căn hộ -->
-                                <?php if (!empty($bang_gia_can_ho)): ?>
+                                <!-- Tab Panel 3: Loại căn hộ & Sơ đồ Layout -->
+                                <?php if ($has_unit_types): ?>
                                     <div data-section-tab-panel="unit-types" data-tab-group="floorplan-products" class="hidden" data-unit-filter-container>
                                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                                             <div>
-                                                <h3 class="text-sm sm:text-base font-bold text-charcoal m-0">Phân loại sản phẩm căn hộ theo thiết kế</h3>
-                                                <p class="text-xs text-charcoal-muted m-0 mt-0.5">Chọn loại phòng ngủ phù hợp với nhu cầu sinh hoạt của gia đình bạn.</p>
+                                                <h3 class="text-sm sm:text-base font-bold text-charcoal m-0">Phân loại sản phẩm căn hộ &amp; Sơ đồ thiết kế</h3>
+                                                <p class="text-xs text-charcoal-muted m-0 mt-0.5">Chọn loại phòng ngủ để xem chi tiết diện tích, khoảng giá và layout mặt bằng.</p>
                                             </div>
                                             <!-- Pills lọc nhanh loại phòng -->
                                             <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
                                                 <button type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-primary text-white shadow-xs cursor-pointer shrink-0" data-unit-filter="all">Tất cả</button>
+                                                <button type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-stone/50 hover:bg-stone text-charcoal-muted hover:text-charcoal border border-border/60 cursor-pointer shrink-0" data-unit-filter="1">1 Phòng ngủ</button>
                                                 <button type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-stone/50 hover:bg-stone text-charcoal-muted hover:text-charcoal border border-border/60 cursor-pointer shrink-0" data-unit-filter="2">2 Phòng ngủ</button>
                                                 <button type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-stone/50 hover:bg-stone text-charcoal-muted hover:text-charcoal border border-border/60 cursor-pointer shrink-0" data-unit-filter="3">3 Phòng ngủ</button>
                                                 <button type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-stone/50 hover:bg-stone text-charcoal-muted hover:text-charcoal border border-border/60 cursor-pointer shrink-0" data-unit-filter="vip">VIP / Penthouse</button>
                                             </div>
                                         </div>
 
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                                            <?php foreach ($bang_gia_can_ho as $can_ho): ?>
-                                                <?php
-                                                $lh = $can_ho['loai_hinh'] ?? '';
-                                                $dt = $can_ho['dien_tich'] ?? '';
-                                                $kg = $can_ho['khoang_gia'] ?? '';
-                                                $tt = $can_ho['tinh_trang'] ?? 'Đang mở bán';
-                                                $filter_tag = (stripos($lh, '2') !== false) ? '2' : ((stripos($lh, '3') !== false) ? '3' : 'vip');
-                                                ?>
-                                                <div class="p-4 rounded-xl bg-canvas border border-border/70 flex flex-col justify-between gap-3 hover:border-primary/40 transition-colors" data-unit-card data-unit-type="<?php echo esc_attr($filter_tag); ?>">
-                                                    <div>
-                                                        <div class="flex items-center justify-between gap-2 mb-2">
-                                                            <h4 class="font-bold text-charcoal text-sm m-0 leading-snug"><?php echo esc_html($lh); ?></h4>
-                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><?php echo esc_html($tt); ?></span>
+                                        <?php if (!empty($danh_sach_loai_can_ho)): ?>
+                                            <!-- Hiển thị theo trường chuyên biệt danh_sach_loai_can_ho (có ảnh sơ đồ layout) -->
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <?php foreach ($danh_sach_loai_can_ho as $can_ho): ?>
+                                                    <?php
+                                                    $lh = $can_ho['ten_loai_can'] ?? '';
+                                                    $pn = $can_ho['so_phong_ngu'] ?? '2';
+                                                    $dt = $can_ho['dien_tich'] ?? '';
+                                                    $kg = $can_ho['khoang_gia'] ?? '';
+                                                    $img_layout = $can_ho['anh_layout'] ?? null;
+                                                    $img_id = is_array($img_layout) ? ($img_layout['ID'] ?? $img_layout['id'] ?? 0) : (is_numeric($img_layout) ? (int)$img_layout : 0);
+                                                    $img_url = $img_id ? wp_get_attachment_image_url($img_id, 'large') : (is_array($img_layout) ? ($img_layout['url'] ?? '') : '');
+                                                    ?>
+                                                    <div class="p-4 sm:p-5 rounded-xl bg-canvas border border-border/70 flex flex-col justify-between gap-3.5 hover:border-primary/40 transition-colors shadow-subtle" data-unit-card data-unit-type="<?php echo esc_attr($pn); ?>">
+                                                        <div>
+                                                            <div class="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-border/50">
+                                                                <h4 class="font-bold text-charcoal text-sm sm:text-base m-0 leading-snug"><?php echo esc_html($lh); ?></h4>
+                                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><?php echo esc_html($pn === 'vip' ? 'VIP / Đặc quyền' : $pn . ' Phòng ngủ'); ?></span>
+                                                            </div>
+                                                            <div class="grid grid-cols-2 gap-2 text-xs text-charcoal-muted mb-3">
+                                                                <div>
+                                                                    <span>Diện tích:</span>
+                                                                    <strong class="text-charcoal font-semibold block text-xs sm:text-sm"><?php echo esc_html($dt ?: 'Đang cập nhật'); ?></strong>
+                                                                </div>
+                                                                <div>
+                                                                    <span>Giá tham khảo:</span>
+                                                                    <strong class="text-primary font-bold block text-xs sm:text-sm"><?php echo esc_html($clean_draft_text($kg, 'Liên hệ báo giá')); ?></strong>
+                                                                </div>
+                                                            </div>
+                                                            <?php if (!empty($img_url)): ?>
+                                                                <a href="<?php echo esc_url($img_url); ?>" target="_blank" class="group/img block relative aspect-[16/10] rounded-lg overflow-hidden border border-border/60 bg-white p-2">
+                                                                    <img src="<?php echo esc_url($img_url); ?>" alt="Layout <?php echo esc_attr($lh); ?>" class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-300" loading="lazy">
+                                                                    <div class="absolute inset-0 bg-charcoal/30 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
+                                                                        <span class="px-2.5 py-1 rounded bg-white/95 text-charcoal text-[11px] font-semibold shadow-xs">Xem bản vẽ chi tiết &rarr;</span>
+                                                                    </div>
+                                                                </a>
+                                                            <?php endif; ?>
                                                         </div>
-                                                        <div class="space-y-1.5 text-xs text-charcoal-muted">
-                                                            <div class="flex items-center justify-between">
-                                                                <span>Diện tích thông thủy:</span>
-                                                                <strong class="text-charcoal font-semibold"><?php echo esc_html($dt ?: 'Đang cập nhật'); ?></strong>
-                                                            </div>
-                                                            <div class="flex items-center justify-between">
-                                                                <span>Khoảng giá tham khảo:</span>
-                                                                <strong class="text-primary font-bold text-sm"><?php echo esc_html($kg ?: 'Liên hệ báo giá'); ?></strong>
-                                                            </div>
+                                                        <div class="pt-3 border-t border-border/50 flex items-center justify-between gap-2">
+                                                            <span class="text-[11px] text-charcoal-muted">Thiết kế tối ưu công năng</span>
+                                                            <button type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline cursor-pointer" data-modal-target="advisor-modal">
+                                                                <span>Tư vấn chọn căn</span>
+                                                                <span aria-hidden="true">&rarr;</span>
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="pt-3 border-t border-border/50 flex items-center justify-between gap-2">
-                                                        <span class="text-[11px] text-charcoal-muted">Bàn giao nội thất cao cấp</span>
-                                                        <button type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline cursor-pointer" data-modal-target="advisor-modal">
-                                                            <span>Tư vấn chọn căn</span>
-                                                            <span aria-hidden="true">&rarr;</span>
-                                                        </button>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php elseif (!empty($bang_gia_can_ho)): ?>
+                                            <!-- Fallback từ bảng giá căn hộ nếu chưa nhập trường danh_sach_loai_can_ho -->
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                                <?php foreach ($bang_gia_can_ho as $can_ho): ?>
+                                                    <?php
+                                                    $lh = $can_ho['loai_hinh'] ?? '';
+                                                    $dt = $can_ho['dien_tich'] ?? '';
+                                                    $kg = $can_ho['khoang_gia'] ?? '';
+                                                    $tt = $can_ho['tinh_trang'] ?? 'Đang mở bán';
+                                                    $filter_tag = (stripos($lh, '1') !== false) ? '1' : ((stripos($lh, '2') !== false) ? '2' : ((stripos($lh, '3') !== false) ? '3' : 'vip'));
+                                                    ?>
+                                                    <div class="p-4 rounded-xl bg-canvas border border-border/70 flex flex-col justify-between gap-3 hover:border-primary/40 transition-colors" data-unit-card data-unit-type="<?php echo esc_attr($filter_tag); ?>">
+                                                        <div>
+                                                            <div class="flex items-center justify-between gap-2 mb-2">
+                                                                <h4 class="font-bold text-charcoal text-sm m-0 leading-snug"><?php echo esc_html($lh); ?></h4>
+                                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><?php echo esc_html($tt); ?></span>
+                                                            </div>
+                                                            <div class="space-y-1.5 text-xs text-charcoal-muted">
+                                                                <div class="flex items-center justify-between">
+                                                                    <span>Diện tích thông thủy:</span>
+                                                                    <strong class="text-charcoal font-semibold"><?php echo esc_html($dt ?: 'Đang cập nhật'); ?></strong>
+                                                                </div>
+                                                                <div class="flex items-center justify-between">
+                                                                    <span>Khoảng giá tham khảo:</span>
+                                                                    <strong class="text-primary font-bold text-sm"><?php echo esc_html($clean_draft_text($kg, 'Liên hệ báo giá')); ?></strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pt-3 border-t border-border/50 flex items-center justify-between gap-2">
+                                                            <span class="text-[11px] text-charcoal-muted">Bàn giao nội thất cao cấp</span>
+                                                            <button type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline cursor-pointer" data-modal-target="advisor-modal">
+                                                                <span>Tư vấn chọn căn</span>
+                                                                <span aria-hidden="true">&rarr;</span>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
 
@@ -1365,9 +1402,15 @@ if (have_posts()) :
                                     <h2 class="text-lg md:text-xl font-bold text-charcoal tracking-tight m-0">Giá Bán, Chính Sách &amp; Ước Tính Khoản Vay</h2>
                                 </div>
                                 <?php if (!empty($gia_ban_du_kien)): ?>
-                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary self-start sm:self-center">
-                                        <span class="text-[11px] font-medium uppercase tracking-wider text-charcoal-muted">Giá từ:</span>
-                                        <strong class="text-base font-extrabold text-primary"><?php echo esc_html($gia_ban_du_kien); ?></strong>
+                                    <?php $is_sec5_contact = (mb_stripos($gia_ban_du_kien, "liên hệ") !== false); ?>
+                                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary self-start sm:self-center">
+                                        <?php if ($is_sec5_contact): ?>
+                                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                            <strong class="text-sm font-bold text-primary">Liên hệ nhận bảng giá chi tiết</strong>
+                                        <?php else: ?>
+                                            <span class="text-[11px] font-medium uppercase tracking-wider text-charcoal-muted">Giá từ:</span>
+                                            <strong class="text-base font-extrabold text-primary"><?php echo esc_html($gia_ban_du_kien); ?></strong>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -1414,7 +1457,7 @@ if (have_posts()) :
                                                     <tr class="hover:bg-stone/20 transition-colors">
                                                         <td class="py-3 px-3 font-semibold text-charcoal"><?php echo esc_html($bg['loai_hinh'] ?? ''); ?></td>
                                                         <td class="py-3 px-3 text-charcoal-muted"><?php echo esc_html($bg['dien_tich'] ?? ''); ?></td>
-                                                        <td class="py-3 px-3 font-bold text-primary"><?php echo esc_html($bg['khoang_gia'] ?? ''); ?></td>
+                                                        <td class="py-3 px-3 font-bold text-primary"><?php echo esc_html($clean_draft_text($bg['khoang_gia'] ?? '', 'Liên hệ báo giá')); ?></td>
                                                         <td class="py-3 px-3 text-right">
                                                             <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                                                 <?php echo esc_html($bg['tinh_trang'] ?? 'Đang mở bán'); ?>

@@ -53,7 +53,15 @@ if (!$gia_ban_du_kien) {
     $price_val = batdongsan_get_project_meta_recursive('price', $post_id);
     if ($price_val) {
         $price_str = trim((string) $price_val);
-        $gia_ban_du_kien = preg_match('/tỷ|triệu|m2/iu', $price_str) ? $price_str : 'Từ ' . $price_str . ' tỷ';
+        if (preg_match('/cập nhật|liên hệ|thỏa thuận|chưa có/iu', $price_str)) {
+            $gia_ban_du_kien = 'Liên hệ báo giá';
+        } elseif (is_numeric(str_replace([',', ' '], ['.', ''], $price_str))) {
+            $gia_ban_du_kien = 'Từ ' . $price_str . ' tỷ';
+        } elseif (preg_match('/tỷ|triệu|m2|m²/iu', $price_str)) {
+            $gia_ban_du_kien = preg_match('/^(từ|chỉ từ|khoảng)/iu', $price_str) ? $price_str : 'Từ ' . $price_str;
+        } else {
+            $gia_ban_du_kien = $price_str;
+        }
     }
 }
 

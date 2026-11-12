@@ -382,11 +382,11 @@
         },
         {
             "key": "field_tien_ich",
-            "label": "Tiện ích nổi bật",
+            "label": "Tiện ích nội khu",
             "name": "tien_ich",
             "aria-label": "",
             "type": "wysiwyg",
-            "instructions": "Danh sách mô tả tiện ích nội khu và ngoại khu của dự án.",
+            "instructions": "Danh sách mô tả các tiện ích nội khu của dự án (hồ bơi, công viên, sảnh đón, clubhouse...).",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -398,6 +398,25 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_tien_ich_ngoai_khu",
+            "label": "Tiện ích ngoại khu",
+            "name": "tien_ich_ngoai_khu",
+            "type": "wysiwyg",
+            "instructions": "Mô tả tiện ích xung quanh, liên kết vùng (trường học, bệnh viện, ga Metro, TTTM lân cận...). Để trống nếu chưa có.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
@@ -489,6 +508,94 @@
             "insert": "append",
             "mime_types": "",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_danh_sach_loai_can_ho",
+            "label": "Danh sách loại căn hộ & Layout chi tiết",
+            "name": "danh_sach_loai_can_ho",
+            "type": "repeater",
+            "instructions": "Nhập danh sách các loại căn hộ (1PN, 2PN, 3PN, Penthouse...), diện tích, khoảng giá và tải ảnh sơ đồ mặt bằng chi tiết.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_lch_ten",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "+ Thêm Loại Căn Hộ",
+            "sub_fields": [
+                {
+                    "key": "field_lch_ten",
+                    "label": "Tên loại căn",
+                    "name": "ten_loai_can",
+                    "type": "text",
+                    "instructions": "Ví dụ: Căn 1PN+1, Căn 2PN (2WC), Căn 3PN góc, Penthouse",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "25"
+                    }
+                },
+                {
+                    "key": "field_lch_phong_ngu",
+                    "label": "Số phòng ngủ",
+                    "name": "so_phong_ngu",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "choices": {
+                        "1": "1 Phòng ngủ",
+                        "2": "2 Phòng ngủ",
+                        "3": "3 Phòng ngủ",
+                        "4": "4 Phòng ngủ",
+                        "vip": "VIP / Penthouse / Duplex"
+                    },
+                    "default_value": "2",
+                    "allow_null": 0,
+                    "wrapper": {
+                        "width": "15"
+                    }
+                },
+                {
+                    "key": "field_lch_dien_tich",
+                    "label": "Diện tích (m²)",
+                    "name": "dien_tich",
+                    "type": "text",
+                    "instructions": "Ví dụ: 68 - 72 m²",
+                    "required": 0,
+                    "wrapper": {
+                        "width": "15"
+                    }
+                },
+                {
+                    "key": "field_lch_khoang_gia",
+                    "label": "Khoảng giá tham khảo",
+                    "name": "khoang_gia",
+                    "type": "text",
+                    "instructions": "Ví dụ: Từ 3.2 tỷ",
+                    "required": 0,
+                    "wrapper": {
+                        "width": "15"
+                    }
+                },
+                {
+                    "key": "field_lch_anh_layout",
+                    "label": "Ảnh sơ đồ Layout căn hộ",
+                    "name": "anh_layout",
+                    "type": "image",
+                    "instructions": "Bản vẽ thiết kế bóc mái hoặc 2D layout căn hộ",
+                    "required": 0,
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "wrapper": {
+                        "width": "30"
+                    }
+                }
+            ]
         },
         {
             "key": "field_phoi_canh_3d_gallery",
